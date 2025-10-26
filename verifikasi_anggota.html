@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verifikasi Anggota - Putera Delima</title>
+  <link rel="stylesheet" href="assets/css/admin.css">
+</head>
+<body>
+  <header class="navbar">
+    <h1>👥 Verifikasi Anggota Baru</h1>
+  </header>
+
+  <section class="admin-container">
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Nama</th>
+          <th>Jenis Kelamin</th>
+          <th>Umur</th>
+          <th>Agama</th>
+          <th>Status</th>
+          <th>Alamat (Blok/RT/RW)</th>
+          <th>Aksi</th>
+        </tr>
+      </thead>
+      <tbody id="anggota-body"></tbody>
+    </table>
+  </section>
+
+  <script src="assets/js/supabase.js"></script>
+  <script src="assets/js/verifikasi_anggota.js"></script>
+</body>
+</html>
