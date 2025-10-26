@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Daftar Akun | Putera Delima</title>
-  <link rel="stylesheet" href="assets/css/daftar.css">
+  <link rel="stylesheet" href="assets/css/daftar.css" />
 </head>
 <body>
   <div class="login-wrapper">
@@ -67,13 +67,85 @@
   </div>
 
   <!-- === Supabase SDK === -->
-<script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.7/dist/umd/supabase.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.7/dist/umd/supabase.js"></script>
 
-<!-- === Supabase Client Setup === -->
-<script defer src="assets/js/supabase.js"></script>
+  <!-- === Supabase Client Setup === -->
+  <script>
+    const supabaseUrl = "https://pnxdnbsyvjilvkeoltxo.supabase.co";
+    const supabaseAnonKey =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBueGRuYnN5dmppbHZrZW9sdHhvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzA5OTU5NTAsImV4cCI6MjA0NjU3MTk1MH0.04b9PiULqMeH50yUSaWUMaSGPIPNZoYxRIRL6v8z-JY";
 
-<!-- === Script Pendaftaran === -->
-<script defer src="assets/js/daftar.js"></script>
+    if (window.supabase) {
+      window.supabase = supabase.createClient(supabaseUrl, supabaseAnonKey);
+      console.log("✅ Supabase client berhasil dibuat");
+    } else {
+      console.error("❌ Supabase SDK tidak dimuat!");
+    }
+  </script>
 
+  <!-- === Script Pendaftaran (langsung di sini) === -->
+  <script>
+    window.onload = async function () {
+      console.log("✅ DOM siap (window.onload dipanggil)");
+      const daftarBtn = document.getElementById("daftar-btn");
+      const msg = document.getElementById("msg");
+
+      if (!daftarBtn) {
+        console.error("❌ Tombol #daftar-btn tidak ditemukan!");
+        return;
+      }
+
+      daftarBtn.addEventListener("click", async () => {
+        msg.textContent = "🔄 Mengirim data pendaftaran...";
+
+        const nama = document.getElementById("nama").value.trim();
+        const jenis_kelamin = document.getElementById("jenis_kelamin").value;
+        const umur = document.getElementById("umur").value;
+        const agama = document.getElementById("agama").value.trim();
+        const status_hubungan = document.getElementById("status_hubungan").value;
+        const blok = document.getElementById("blok").value.trim();
+        const rt = document.getElementById("rt").value.trim();
+        const rw = document.getElementById("rw").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value.trim();
+
+        if (!nama || !jenis_kelamin || !umur || !agama || !status_hubungan || !blok || !rt || !rw || !email || !password) {
+          msg.textContent = "⚠️ Semua kolom wajib diisi.";
+          return;
+        }
+
+        try {
+          const { data, error } = await supabase.auth.signUp({
+            email,
+            password,
+            options: {
+              data: {
+                nama,
+                jenis_kelamin,
+                umur,
+                agama,
+                status_hubungan,
+                blok,
+                rt,
+                rw,
+                role: "anggota",
+                status: "pending",
+              },
+            },
+          });
+
+          if (error) {
+            msg.textContent = `❌ Gagal mendaftar: ${error.message}`;
+            return;
+          }
+
+          msg.textContent = "✅ Pendaftaran berhasil! Tunggu persetujuan admin sebelum login.";
+        } catch (err) {
+          console.error(err);
+          msg.textContent = "❌ Terjadi kesalahan tidak terduga.";
+        }
+      });
+    };
+  </script>
 </body>
 </html>
