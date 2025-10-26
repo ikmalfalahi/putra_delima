@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Iuran Anggota - Putera Delima</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <header class="navbar">
+    <h1>💰 Iuran Anggota</h1>
+    <button id="logout-btn">Logout</button>
+  </header>
+
+  <section class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Nama</th>
+          <th>Bulan</th>
+          <th>Status Iuran</th>
+        </tr>
+      </thead>
+      <tbody id="iuran-table"></tbody>
+    </table>
+  </section>
+
+  <div id="bukti-popup" class="popup hidden">
+    <div class="popup-content">
+      <img id="bukti-img" src="" alt="Bukti Iuran">
+      <button id="close-popup">Tutup</button>
+    </div>
+  </div>
+
+  <script src="assets/js/supabase.js"></script>
+  <script src="assets/js/anggota.js"></script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profil Anggota - Putera Delima</title>
+  <link rel="stylesheet" href="anggota.css">
+</head>
+<body>
+  <div class="navbar">
+    <h2>👤 Profil Anggota</h2>
+    <button id="logout-btn">Logout</button>
+  </div>
+
+  <div class="profile-container">
+    <h3 id="nama-anggota"></h3>
+
+    <table class="iuran-table">
+      <thead>
+        <tr>
+          <th>Bulan</th>
+          <th>Status</th>
+          <th>Bukti</th>
+          <th>Aksi</th>
+        </tr>
+      </thead>
+      <tbody id="iuran-body"></tbody>
+    </table>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabaseClient.js"></script>
+  <script src="anggota.js"></script>
+</body>
+</html>

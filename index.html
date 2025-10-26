@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Putera Delima - Organisasi</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <header class="navbar">
+    <h1>✨ Putera Delima ✨</h1>
+    <nav>
+      <a href="#tentang">Tentang</a>
+      <a href="#galeri">Galeri</a>
+      <a href="login.html" class="btn-login">Login</a>
+    </nav>
+  </header>
+
+  <!-- ==== Landing Section ==== -->
+  <section class="hero">
+    <h2>Selamat Datang di Organisasi Putera Delima</h2>
+    <p>Bersama membangun kebersamaan, solidaritas, dan kepedulian.</p>
+  </section>
+
+  <!-- ==== Accordion Tentang ==== -->
+  <section id="tentang" class="accordion-section">
+    <h2>📜 Tentang Kami</h2>
+
+    <div class="accordion">
+      <button class="accordion-btn">Profil Organisasi</button>
+      <div class="accordion-content">
+        <p>Putera Delima adalah organisasi sosial yang berfokus pada kegiatan kemasyarakatan dan pengembangan generasi muda.</p>
+      </div>
+
+      <button class="accordion-btn">Visi dan Misi</button>
+      <div class="accordion-content">
+        <p><strong>Visi:</strong> Menjadi wadah positif bagi generasi muda yang aktif dan peduli.</p>
+        <p><strong>Misi:</strong> Melaksanakan kegiatan sosial, mempererat persaudaraan, dan menumbuhkan semangat kebersamaan.</p>
+      </div>
+
+      <button class="accordion-btn">Struktur Pengurus</button>
+      <div class="accordion-content">
+        <p>Ketua: Ahmad Fauzi<br>Sekretaris: Laila Nur<br>Bendahara: Fikri H.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==== Galeri Kegiatan ==== -->
+  <section id="galeri" class="gallery-section">
+    <h2>📸 Galeri Kegiatan</h2>
+
+    <div class="filter-btns">
+      <button data-filter="all" class="active">Semua</button>
+      <button data-filter="bakti">Bakti Sosial</button>
+      <button data-filter="rapat">Rapat</button>
+      <button data-filter="perayaan">Perayaan</button>
+    </div>
+
+    <div class="gallery-grid">
+      <div class="gallery-item" data-category="bakti">
+        <img src="assets/img/bakti1.jpg" alt="Bakti Sosial">
+      </div>
+      <div class="gallery-item" data-category="rapat">
+        <img src="assets/img/rapat1.jpg" alt="Rapat Anggota">
+      </div>
+      <div class="gallery-item" data-category="perayaan">
+        <img src="assets/img/perayaan1.jpg" alt="Perayaan Tahunan">
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 Putera Delima. All rights reserved.</p>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
