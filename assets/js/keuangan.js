@@ -1,85 +1,56 @@
 document.addEventListener("DOMContentLoaded", async () => {
-  // === Auth Check ===
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) return (window.location.href = "login.html");
-
-  // === Navbar Responsive ===
-  const hamburger = document.getElementById("hamburger");
-  const navLinks = document.getElementById("nav-links");
-  if (hamburger && navLinks) {
-    hamburger.addEventListener("click", () => navLinks.classList.toggle("show"));
-  }
-
-  // === Element References ===
-  const tbody = document.getElementById("keuangan-body");
-  const popup = document.getElementById("popup-form");
-  const addBtn = document.getElementById("add-transaksi");
-  const refreshBtn = document.getElementById("refresh-keuangan");
-  const saveBtn = document.getElementById("save-data");
-  const cancelBtn = document.getElementById("cancel");
-  const logoutBtn = document.getElementById("logout-btn");
+  const tbody = document.getElementById("tabel-keuangan");
+  const popup = document.getElementById("popup-keuangan");
+  const tambahBtn = document.getElementById("tambah-keuangan");
+  const simpanBtn = document.getElementById("simpan-keuangan");
+  const batalBtn = document.getElementById("batal-keuangan");
 
   let editId = null;
 
-  // === Load Data ===
-  async function loadData() {
-    const { data, error } = await supabase
-      .from("keuangan")
-      .select("*")
-      .order("id", { ascending: true });
+  // === Load Data Keuangan ===
+  async function loadKeuangan() {
+    const { data, error } = await supabase.from("keuangan").select("*").order("tanggal", { ascending: false });
+    if (error) return (tbody.innerHTML = `<tr><td colspan="6">❌ Gagal memuat data.</td></tr>`);
 
-    if (error) {
-      tbody.innerHTML = `<tr><td colspan="6">❌ Gagal memuat data.</td></tr>`;
-      return;
-    }
-
-    let totalPemasukan = 0, totalPengeluaran = 0;
-    tbody.innerHTML = "";
-
-    data.forEach((row, i) => {
-      if (row.jenis === "pemasukan") totalPemasukan += row.jumlah;
-      else totalPengeluaran += row.jumlah;
-
-      const tr = document.createElement("tr");
-      tr.innerHTML = `
+    tbody.innerHTML = data.map((d, i) => `
+      <tr>
         <td>${i + 1}</td>
-        <td>${new Date(row.tanggal).toLocaleDateString("id-ID")}</td>
-        <td>${row.jenis}</td>
-        <td>${row.keterangan}</td>
-        <td>Rp ${row.jumlah.toLocaleString("id-ID")}</td>
+        <td>${new Date(d.tanggal).toLocaleDateString("id-ID")}</td>
+        <td>${d.jenis}</td>
+        <td>${d.keterangan}</td>
+        <td>${d.jumlah.toLocaleString("id-ID")}</td>
         <td>
-          <button class="edit-btn" data-id="${row.id}">✏️</button>
-          <button class="del-btn" data-id="${row.id}">🗑️</button>
+          <button class="edit" data-id="${d.id}">✏️</button>
+          <button class="hapus" data-id="${d.id}">🗑️</button>
         </td>
-      `;
-      tbody.appendChild(tr);
-    });
+      </tr>
+    `).join("");
 
-    document.getElementById("total-pemasukan").textContent = `Rp ${totalPemasukan.toLocaleString("id-ID")}`;
-    document.getElementById("total-pengeluaran").textContent = `Rp ${totalPengeluaran.toLocaleString("id-ID")}`;
-    document.getElementById("saldo-akhir").textContent = `Rp ${(totalPemasukan - totalPengeluaran).toLocaleString("id-ID")}`;
+    hitungRingkasan(data);
   }
 
-  loadData();
+  loadKeuangan();
 
-  // === Add/Edit Transaksi ===
-  addBtn.addEventListener("click", () => {
-    editId = null;
-    popup.classList.remove("hidden");
-  });
+  // === Hitung Total ===
+  function hitungRingkasan(data) {
+    let pemasukan = 0, pengeluaran = 0;
+    data.forEach(d => d.jenis === "pemasukan" ? pemasukan += d.jumlah : pengeluaran += d.jumlah);
+    document.getElementById("total-pemasukan").textContent = "Rp " + pemasukan.toLocaleString("id-ID");
+    document.getElementById("total-pengeluaran").textContent = "Rp " + pengeluaran.toLocaleString("id-ID");
+    document.getElementById("saldo-akhir").textContent = "Rp " + (pemasukan - pengeluaran).toLocaleString("id-ID");
+  }
 
-  cancelBtn.addEventListener("click", () => popup.classList.add("hidden"));
+  // === Tambah/Edit ===
+  tambahBtn.addEventListener("click", () => popup.classList.remove("hidden"));
+  batalBtn.addEventListener("click", () => popup.classList.add("hidden"));
 
-  saveBtn.addEventListener("click", async () => {
+  simpanBtn.addEventListener("click", async () => {
     const tanggal = document.getElementById("tanggal").value;
     const jenis = document.getElementById("jenis").value;
-    const keterangan = document.getElementById("keterangan").value.trim();
+    const keterangan = document.getElementById("keterangan").value;
     const jumlah = Number(document.getElementById("jumlah").value);
 
-    if (!tanggal || !jenis || !keterangan || !jumlah) {
-      alert("⚠️ Lengkapi semua data!");
-      return;
-    }
+    if (!tanggal || !jenis || !keterangan || !jumlah) return alert("Lengkapi semua data!");
 
     const formData = { tanggal, jenis, keterangan, jumlah };
 
@@ -90,14 +61,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     popup.classList.add("hidden");
-    loadData();
+    loadKeuangan();
   });
 
-  // === Edit & Hapus ===
+  // === Edit / Hapus ===
   tbody.addEventListener("click", async (e) => {
     const id = e.target.dataset.id;
-
-    if (e.target.classList.contains("edit-btn")) {
+    if (e.target.classList.contains("edit")) {
       const { data } = await supabase.from("keuangan").select("*").eq("id", id).single();
       document.getElementById("tanggal").value = data.tanggal;
       document.getElementById("jenis").value = data.jenis;
@@ -107,20 +77,11 @@ document.addEventListener("DOMContentLoaded", async () => {
       popup.classList.remove("hidden");
     }
 
-    if (e.target.classList.contains("del-btn")) {
-      if (confirm("🗑️ Hapus data ini?")) {
+    if (e.target.classList.contains("hapus")) {
+      if (confirm("Hapus data ini?")) {
         await supabase.from("keuangan").delete().eq("id", id);
-        loadData();
+        loadKeuangan();
       }
     }
-  });
-
-  // === Refresh ===
-  refreshBtn.addEventListener("click", loadData);
-
-  // === Logout ===
-  logoutBtn.addEventListener("click", async () => {
-    await supabase.auth.signOut();
-    window.location.href = "login.html";
   });
 });
