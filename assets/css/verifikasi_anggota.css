@@ -1,0 +1,145 @@
+/* Reset dasar */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, #00aaff, #007bff);
+  color: #fff;
+  min-height: 100vh;
+}
+
+/* Navbar */
+.navbar {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 40px;
+  color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.navbar h1 {
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.navbar nav a,
+.navbar button {
+  color: #fff;
+  text-decoration: none;
+  margin-left: 15px;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  border-radius: 10px;
+  padding: 8px 15px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.navbar nav a:hover,
+.navbar button:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+/* Container */
+.container {
+  display: flex;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+/* Card */
+.table-card {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(20px);
+  padding: 25px 30px;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 1100px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.table-card h2 {
+  font-size: 1.5rem;
+  margin-bottom: 5px;
+  color: #fff;
+  text-align: center;
+}
+
+.table-card .sub {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #d6d6d6;
+  font-size: 0.95rem;
+}
+
+/* Table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  color: #fff;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+thead {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+thead th {
+  padding: 10px 8px;
+  border-radius: 8px 8px 0 0;
+}
+
+tbody td {
+  padding: 12px 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+tbody tr:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Tombol aksi */
+button.approve,
+button.reject {
+  border: none;
+  border-radius: 8px;
+  padding: 6px 12px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: 0.3s ease;
+}
+
+button.approve {
+  background: linear-gradient(135deg, #00c851, #007e33);
+}
+
+button.reject {
+  background: linear-gradient(135deg, #ff4444, #cc0000);
+}
+
+button.approve:hover {
+  background: linear-gradient(135deg, #00e060, #00994f);
+}
+
+button.reject:hover {
+  background: linear-gradient(135deg, #ff6666, #cc3333);
+}
+
+.loading {
+  text-align: center;
+  color: #fff;
+  padding: 20px;
+  font-style: italic;
+}
