@@ -2,6 +2,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   console.log("✅ daftar.js dimuat dan DOM siap");
 
   const daftarBtn = document.getElementById("daftar-btn");
+  console.log("🔍 daftarBtn:", daftarBtn); // <-- log tambahan
+
   const msg = document.getElementById("msg");
 
   if (!daftarBtn) {
