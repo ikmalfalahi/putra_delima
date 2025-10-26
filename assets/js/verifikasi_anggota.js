@@ -1,11 +1,16 @@
 document.addEventListener("DOMContentLoaded", async () => {
+  if (!window.supabase) return console.error("❌ Supabase client belum dimuat.");
+
   const tbody = document.getElementById("anggota-body");
 
+  // Load anggota pending
   async function loadAnggota() {
     tbody.innerHTML = `<tr><td colspan="9" class="loading">🔄 Memuat data...</td></tr>`;
+
     const { data, error } = await supabase
       .from("profiles")
       .select("*")
+      .eq("status", "pending") // hanya anggota baru
       .order("created_at", { ascending: false });
 
     if (error) {
@@ -19,6 +24,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       return;
     }
 
+    // Render data anggota
     tbody.innerHTML = data.map((a, i) => `
       <tr>
         <td>${i + 1}</td>
@@ -30,28 +36,37 @@ document.addEventListener("DOMContentLoaded", async () => {
         <td>Blok ${a.blok || "-"}, RT ${a.rt || "-"}, RW ${a.rw || "-"}</td>
         <td>${a.status}</td>
         <td>
-          ${a.status === "pending" ? `
-            <button class="approve" data-id="${a.id}">Approve</button>
-            <button class="reject" data-id="${a.id}">Reject</button>
-          ` : "-"}
+          <button class="approve" data-id="${a.id}">Approve</button>
+          <button class="reject" data-id="${a.id}">Reject</button>
         </td>
       </tr>
     `).join("");
   }
 
+  // Initial load
   loadAnggota();
 
+  // Handle click approve/reject
   tbody.addEventListener("click", async (e) => {
     const id = e.target.dataset.id;
     if (!id) return;
 
     if (e.target.classList.contains("approve")) {
-      await supabase.from("profiles").update({ status: "approved" }).eq("id", id);
+      const { error } = await supabase
+        .from("profiles")
+        .update({ status: "approved" })
+        .eq("id", id);
+      if (error) return alert("❌ Gagal approve: " + error.message);
       alert("✅ Anggota disetujui!");
       loadAnggota();
     }
+
     if (e.target.classList.contains("reject")) {
-      await supabase.from("profiles").update({ status: "rejected" }).eq("id", id);
+      const { error } = await supabase
+        .from("profiles")
+        .update({ status: "rejected" })
+        .eq("id", id);
+      if (error) return alert("❌ Gagal reject: " + error.message);
       alert("❌ Anggota ditolak!");
       loadAnggota();
     }
