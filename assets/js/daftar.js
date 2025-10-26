@@ -61,32 +61,40 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     try {
-      // Signup user → trigger handle_new_user otomatis insert ke profiles
-      const { data, error } = await supabase.auth.signUp({
+      // 1️⃣ Signup user (trigger handle_new_user otomatis buat row kosong)
+      const { data: userData, error: signupError } = await supabase.auth.signUp({
         email,
-        password,
-        options: {
-          data: {
-            nama,
-            jenis_kelamin,
-            umur,
-            agama,
-            status_hubungan,
-            blok,
-            rt,
-            rw,
-            role: "anggota",
-            status: "pending"
-          }
-        }
+        password
       });
 
-      if (error) {
-        msg.textContent = `❌ Gagal mendaftar: ${error.message}`;
+      if (signupError) {
+        msg.textContent = `❌ Gagal mendaftar: ${signupError.message}`;
         return;
       }
 
-      console.log("✅ Pendaftaran berhasil:", data);
+      const userId = userData.user.id;
+
+      // 2️⃣ Update profil dengan data lengkap
+      const { error: profileError } = await supabase
+        .from("profiles")
+        .update({
+          nama,
+          jenis_kelamin,
+          umur,
+          agama,
+          status_hubungan,
+          blok,
+          rt,
+          rw
+        })
+        .eq("id", userId);
+
+      if (profileError) {
+        msg.textContent = `❌ Gagal menyimpan profil: ${profileError.message}`;
+        return;
+      }
+
+      console.log("✅ Pendaftaran & profil berhasil:", userId);
       msg.textContent = "✅ Pendaftaran berhasil! Mengalihkan ke halaman verifikasi...";
 
       setTimeout(() => {
