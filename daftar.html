@@ -1,21 +1,19 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Daftar Akun | Putera Delima</title>
-  <link rel="stylesheet" href="assets/css/daftar.css" />
+  <link rel="stylesheet" href="assets/css/daftar.css">
 </head>
 <body>
   <div class="login-wrapper">
     <div class="login-card">
       <h2>Buat Akun Baru ✨</h2>
       <p>Daftar untuk menjadi anggota Putera Delima</p>
-
       <div class="form-group">
-        <input type="text" id="nama" placeholder="Nama Lengkap" required />
+        <input type="text" id="nama" placeholder="Nama Lengkap" required>
       </div>
-
       <div class="form-group">
         <select id="jenis_kelamin" required>
           <option value="">Pilih Jenis Kelamin</option>
@@ -23,15 +21,12 @@
           <option value="Perempuan">Perempuan</option>
         </select>
       </div>
-
       <div class="form-group">
-        <input type="number" id="umur" placeholder="Umur" required />
+        <input type="number" id="umur" placeholder="Umur" required>
       </div>
-
       <div class="form-group">
-        <input type="text" id="agama" placeholder="Agama" required />
+        <input type="text" id="agama" placeholder="Agama" required>
       </div>
-
       <div class="form-group">
         <select id="status_hubungan" required>
           <option value="">Status Hubungan</option>
@@ -40,35 +35,31 @@
           <option value="Cerai">Cerai</option>
         </select>
       </div>
-
       <div class="form-group">
-        <input type="text" id="blok" placeholder="Blok (contoh: A)" required />
+        <input type="text" id="blok" placeholder="Blok (contoh: A)" required>
       </div>
-
       <div class="form-row">
-        <input type="text" id="rt" placeholder="RT (contoh: 01)" required />
-        <input type="text" id="rw" placeholder="RW (contoh: 02)" required />
+        <input type="text" id="rt" placeholder="RT (contoh: 01)" required>
+        <input type="text" id="rw" placeholder="RW (contoh: 02)" required>
       </div>
-
       <div class="form-group">
-        <input type="email" id="email" placeholder="Alamat Email" required />
+        <input type="email" id="email" placeholder="Alamat Email" required>
       </div>
-
       <div class="form-group password-group">
-        <input type="password" id="password" placeholder="Masukkan Kata Sandi" required />
+        <input type="password" id="password" placeholder="Masukkan Kata Sandi" required>
         <span id="toggle-pass">Tampilkan</span>
       </div>
-
       <button id="daftar-btn">Daftar</button>
       <p id="msg" class="msg"></p>
-
       <p class="register-text">Sudah punya akun? <a href="login.html">Masuk</a></p>
     </div>
   </div>
 
+  <!-- Supabase CDN -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.7/dist/umd/supabase.js"></script>
-<script src="assets/js/supabase.js"></script>
-<script src="assets/js/daftar.js"></script>
-
+  <!-- Client setup -->
+  <script src="assets/js/supabase.js"></script>
+  <!-- Script daftar -->
+  <script src="assets/js/daftar.js"></script>
 </body>
 </html>
