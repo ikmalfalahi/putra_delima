@@ -1,21 +1,26 @@
-// Supabase Client Setup
-const SUPABASE_URL = "https://ubddfvcjbzuicsewohas.supabase.co";
-const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InViZGRmdmNqYnp1aWNzZXdvaGFzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE0NjA3NzgsImV4cCI6MjA3NzAzNjc3OH0.zwOBGrk2iekzlMlL2_fOqRqFUaeOCaQR1Km_fAEP7jQ";
-
-// Ganti supabase → Supabase untuk UMD
-const supabaseClient = Supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-window.supabase = supabaseClient;
-
 // Script Daftar
-document.addEventListener("DOMContentLoaded", async () => {
+document.addEventListener("DOMContentLoaded", () => {
   console.log("✅ daftar.js dimuat dan DOM siap");
 
   const daftarBtn = document.getElementById("daftar-btn");
   const msg = document.getElementById("msg");
+  const togglePass = document.getElementById("toggle-pass");
+  const passwordInput = document.getElementById("password");
 
-  if (!daftarBtn) {
-    console.error("❌ Tombol #daftar-btn tidak ditemukan di halaman!");
-    return;
+  if (!daftarBtn) return console.error("❌ Tombol #daftar-btn tidak ditemukan!");
+  if (!window.supabase) return console.error("❌ Supabase client belum dimuat. Pastikan supabase.js sudah di-load terlebih dahulu.");
+
+  // Toggle password
+  if (togglePass && passwordInput) {
+    togglePass.addEventListener("click", () => {
+      if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+        togglePass.textContent = "Sembunyikan";
+      } else {
+        passwordInput.type = "password";
+        togglePass.textContent = "Tampilkan";
+      }
+    });
   }
 
   daftarBtn.addEventListener("click", async () => {
@@ -30,7 +35,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const rt = document.getElementById("rt").value.trim();
     const rw = document.getElementById("rw").value.trim();
     const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("password").value.trim();
+    const password = passwordInput.value.trim();
 
     if (!nama || !jenis_kelamin || !umur || !agama || !status_hubungan || !blok || !rt || !rw || !email || !password) {
       msg.textContent = "⚠️ Semua kolom wajib diisi.";
@@ -38,11 +43,31 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     try {
-      const { data, error } = await supabase.auth.signUp({
+      // 1️⃣ Signup user di Supabase Auth
+      const { data: authData, error: authError } = await supabase.auth.signUp({
         email,
         password,
         options: {
           data: {
+            role: "anggota",
+            status: "pending"
+          }
+        }
+      });
+
+      if (authError) {
+        msg.textContent = `❌ Gagal mendaftar: ${authError.message}`;
+        return;
+      }
+
+      const userId = authData.user.id;
+
+      // 2️⃣ Masukkan data ke tabel "anggota"
+      const { data: anggotaData, error: anggotaError } = await supabase
+        .from("anggota")
+        .insert([
+          {
+            id: userId,
             nama,
             jenis_kelamin,
             umur,
@@ -52,40 +77,25 @@ document.addEventListener("DOMContentLoaded", async () => {
             rt,
             rw,
             role: "anggota",
-            status: "pending",
-          },
-        },
-      });
+            status: "pending"
+          }
+        ]);
 
-      if (error) {
-        msg.textContent = `❌ Gagal mendaftar: ${error.message}`;
+      if (anggotaError) {
+        msg.textContent = `❌ Gagal menyimpan data anggota: ${anggotaError.message}`;
         return;
       }
 
-      console.log("✅ Pendaftaran berhasil:", data);
+      console.log("✅ Pendaftaran berhasil:", anggotaData);
       msg.textContent = "✅ Pendaftaran berhasil! Mengalihkan ke halaman verifikasi...";
 
       setTimeout(() => {
         window.location.href = "verifikasi_anggota.html";
       }, 1500);
+
     } catch (err) {
       console.error(err);
       msg.textContent = "❌ Terjadi kesalahan tidak terduga.";
     }
   });
-
-  // Toggle password
-  const togglePass = document.getElementById("toggle-pass");
-  const passwordInput = document.getElementById("password");
-  if (togglePass && passwordInput) {
-    togglePass.addEventListener("click", () => {
-      if (passwordInput.type === "password") {
-        passwordInput.type = "text";
-        togglePass.textContent = "Sembunyikan";
-      } else {
-        passwordInput.type = "password";
-        togglePass.textContent = "Tampilkan";
-      }
-    });
-  }
 });
