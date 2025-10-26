@@ -16,3 +16,4 @@
   console.log("✅ Supabase client berhasil dibuat.");
 })();
 
+
