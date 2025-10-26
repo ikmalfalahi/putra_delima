@@ -7,34 +7,40 @@
   <link rel="stylesheet" href="assets/css/admin.css">
 </head>
 <body>
+  <!-- === Header Navbar === -->
   <header class="navbar">
-    <h1>⚙️ Panel Admin - Putera Delima</h1>
-    <a href="admin.html">Iuran</a>
-    <a href="keuangan.html">Keuangan</a>
-    <a href="profil_anggota.html">Profil</a>
-    <a href="verifikasi_anggota.html">Verifikasi Anggota</a>
-    <button id="logout-btn" class="logout-btn">Logout</button>
+    <div class="nav-left">
+      <h1>⚙️ Admin Putera Delima</h1>
+    </div>
+    <nav class="nav-links">
+      <a href="admin.html" class="active">Dashboard</a>
+      <a href="keuangan.html">Keuangan</a>
+      <a href="verifikasi_anggota.html">Verifikasi</a>
+      <button id="logout-btn">Logout</button>
+    </nav>
   </header>
-  
-<section class="dashboard">
-  <div class="dash-card total">
-    <h3>👥 Total Anggota</h3>
-    <p id="total-anggota">0</p>
-  </div>
-  <div class="dash-card lunas">
-    <h3>✅ Lunas</h3>
-    <p id="total-lunas">0</p>
-  </div>
-  <div class="dash-card belum">
-    <h3>❌ Belum Lunas</h3>
-    <p id="total-belum">0</p>
-  </div>
-  <div class="dash-card dana">
-    <h3>💰 Total Iuran</h3>
-    <p id="total-dana">Rp 0</p>
-  </div>
-</section>
 
+  <!-- === Dashboard Section === -->
+  <section class="dashboard">
+    <div class="dash-card total">
+      <h3>👥 Total Anggota</h3>
+      <p id="total-anggota">0</p>
+    </div>
+    <div class="dash-card lunas">
+      <h3>✅ Lunas</h3>
+      <p id="total-lunas">0</p>
+    </div>
+    <div class="dash-card belum">
+      <h3>❌ Belum Lunas</h3>
+      <p id="total-belum">0</p>
+    </div>
+    <div class="dash-card dana">
+      <h3>💰 Total Iuran</h3>
+      <p id="total-dana">Rp 0</p>
+    </div>
+  </section>
+
+  <!-- === Table Section === -->
   <section class="admin-container">
     <div class="admin-actions">
       <button id="add-data">➕ Tambah Data Iuran</button>
@@ -56,41 +62,36 @@
     </table>
   </section>
 
-  <!-- ==== Popup Tambah/Edit Data ==== -->
+  <!-- === Popup Form === -->
   <div class="popup hidden" id="popup-form">
     <div class="popup-content">
       <h2 id="popup-title">Tambah Data Iuran</h2>
       <input type="text" id="nama" placeholder="Nama Anggota">
       <select id="bulan">
         <option value="">Pilih Bulan</option>
-        <option>Januari</option>
-        <option>Februari</option>
-        <option>Maret</option>
-        <option>April</option>
-        <option>Mei</option>
-        <option>Juni</option>
-        <option>Juli</option>
-        <option>Agustus</option>
-        <option>September</option>
-        <option>Oktober</option>
-        <option>November</option>
-        <option>Desember</option>
+        <option>Januari</option><option>Februari</option><option>Maret</option>
+        <option>April</option><option>Mei</option><option>Juni</option>
+        <option>Juli</option><option>Agustus</option><option>September</option>
+        <option>Oktober</option><option>November</option><option>Desember</option>
       </select>
       <input type="file" id="bukti" accept="image/*">
       <select id="status">
         <option>Lunas</option>
         <option>Belum Lunas</option>
       </select>
-      <button id="save-data">💾 Simpan</button>
-      <button id="cancel">Batal</button>
+      <div class="popup-btns">
+        <button id="save-data">💾 Simpan</button>
+        <button id="cancel">Batal</button>
+      </div>
     </div>
   </div>
 
+  <!-- === Footer === -->
+  <footer class="footer">
+    <p>© 2025 Putera Delima | Sistem Manajemen Iuran & Keuangan</p>
+  </footer>
+
   <script src="assets/js/supabase.js"></script>
   <script src="assets/js/admin.js"></script>
-  
 </body>
 </html>
-
-
-
