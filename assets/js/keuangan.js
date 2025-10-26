@@ -1,7 +1,16 @@
 document.addEventListener("DOMContentLoaded", async () => {
+  // === Auth Check ===
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return (window.location.href = "login.html");
 
+  // === Navbar Responsive ===
+  const hamburger = document.getElementById("hamburger");
+  const navLinks = document.getElementById("nav-links");
+  if (hamburger && navLinks) {
+    hamburger.addEventListener("click", () => navLinks.classList.toggle("show"));
+  }
+
+  // === Element References ===
   const tbody = document.getElementById("keuangan-body");
   const popup = document.getElementById("popup-form");
   const addBtn = document.getElementById("add-transaksi");
@@ -14,14 +23,19 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // === Load Data ===
   async function loadData() {
-    const { data, error } = await supabase.from("keuangan").select("*").order("id", { ascending: true });
+    const { data, error } = await supabase
+      .from("keuangan")
+      .select("*")
+      .order("id", { ascending: true });
+
     if (error) {
-      tbody.innerHTML = `<tr><td colspan="6">Gagal memuat data.</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="6">❌ Gagal memuat data.</td></tr>`;
       return;
     }
 
     let totalPemasukan = 0, totalPengeluaran = 0;
     tbody.innerHTML = "";
+
     data.forEach((row, i) => {
       if (row.jenis === "pemasukan") totalPemasukan += row.jumlah;
       else totalPengeluaran += row.jumlah;
@@ -29,10 +43,10 @@ document.addEventListener("DOMContentLoaded", async () => {
       const tr = document.createElement("tr");
       tr.innerHTML = `
         <td>${i + 1}</td>
-        <td>${row.tanggal}</td>
+        <td>${new Date(row.tanggal).toLocaleDateString("id-ID")}</td>
         <td>${row.jenis}</td>
         <td>${row.keterangan}</td>
-        <td>Rp ${row.jumlah.toLocaleString()}</td>
+        <td>Rp ${row.jumlah.toLocaleString("id-ID")}</td>
         <td>
           <button class="edit-btn" data-id="${row.id}">✏️</button>
           <button class="del-btn" data-id="${row.id}">🗑️</button>
@@ -41,9 +55,9 @@ document.addEventListener("DOMContentLoaded", async () => {
       tbody.appendChild(tr);
     });
 
-    document.getElementById("total-pemasukan").textContent = `Rp ${totalPemasukan.toLocaleString()}`;
-    document.getElementById("total-pengeluaran").textContent = `Rp ${totalPengeluaran.toLocaleString()}`;
-    document.getElementById("saldo-akhir").textContent = `Rp ${(totalPemasukan - totalPengeluaran).toLocaleString()}`;
+    document.getElementById("total-pemasukan").textContent = `Rp ${totalPemasukan.toLocaleString("id-ID")}`;
+    document.getElementById("total-pengeluaran").textContent = `Rp ${totalPengeluaran.toLocaleString("id-ID")}`;
+    document.getElementById("saldo-akhir").textContent = `Rp ${(totalPemasukan - totalPengeluaran).toLocaleString("id-ID")}`;
   }
 
   loadData();
@@ -62,14 +76,17 @@ document.addEventListener("DOMContentLoaded", async () => {
     const keterangan = document.getElementById("keterangan").value.trim();
     const jumlah = Number(document.getElementById("jumlah").value);
 
-    if (!tanggal || !jenis || !keterangan || !jumlah) return alert("Lengkapi semua data!");
+    if (!tanggal || !jenis || !keterangan || !jumlah) {
+      alert("⚠️ Lengkapi semua data!");
+      return;
+    }
 
-    const data = { tanggal, jenis, keterangan, jumlah };
+    const formData = { tanggal, jenis, keterangan, jumlah };
 
     if (editId) {
-      await supabase.from("keuangan").update(data).eq("id", editId);
+      await supabase.from("keuangan").update(formData).eq("id", editId);
     } else {
-      await supabase.from("keuangan").insert([data]);
+      await supabase.from("keuangan").insert([formData]);
     }
 
     popup.classList.add("hidden");
@@ -79,6 +96,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   // === Edit & Hapus ===
   tbody.addEventListener("click", async (e) => {
     const id = e.target.dataset.id;
+
     if (e.target.classList.contains("edit-btn")) {
       const { data } = await supabase.from("keuangan").select("*").eq("id", id).single();
       document.getElementById("tanggal").value = data.tanggal;
@@ -90,7 +108,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     if (e.target.classList.contains("del-btn")) {
-      if (confirm("Hapus data ini?")) {
+      if (confirm("🗑️ Hapus data ini?")) {
         await supabase.from("keuangan").delete().eq("id", id);
         loadData();
       }
