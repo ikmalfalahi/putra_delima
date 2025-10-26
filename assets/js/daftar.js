@@ -1,14 +1,12 @@
-// Script Daftar
+// assets/js/daftar.js
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("✅ daftar.js dimuat dan DOM siap");
-
   const daftarBtn = document.getElementById("daftar-btn");
   const msg = document.getElementById("msg");
   const togglePass = document.getElementById("toggle-pass");
   const passwordInput = document.getElementById("password");
 
   if (!daftarBtn) return console.error("❌ Tombol #daftar-btn tidak ditemukan!");
-  if (!window.supabase) return console.error("❌ Supabase client belum dimuat. Pastikan supabase.js sudah di-load terlebih dahulu.");
+  if (!window.supabase) return console.error("❌ Supabase client belum dimuat.");
 
   // Toggle password
   if (togglePass && passwordInput) {
@@ -43,31 +41,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     try {
-      // 1️⃣ Signup user di Supabase Auth
-      const { data: authData, error: authError } = await supabase.auth.signUp({
+      // Signup user → trigger handle_new_user() otomatis insert ke profiles
+      const { data, error } = await supabase.auth.signUp({
         email,
         password,
         options: {
           data: {
-            role: "anggota",
-            status: "pending"
-          }
-        }
-      });
-
-      if (authError) {
-        msg.textContent = `❌ Gagal mendaftar: ${authError.message}`;
-        return;
-      }
-
-      const userId = authData.user.id;
-
-      // 2️⃣ Masukkan data ke tabel "anggota"
-      const { data: anggotaData, error: anggotaError } = await supabase
-        .from("anggota")
-        .insert([
-          {
-            id: userId,
             nama,
             jenis_kelamin,
             umur,
@@ -79,14 +58,15 @@ document.addEventListener("DOMContentLoaded", () => {
             role: "anggota",
             status: "pending"
           }
-        ]);
+        }
+      });
 
-      if (anggotaError) {
-        msg.textContent = `❌ Gagal menyimpan data anggota: ${anggotaError.message}`;
+      if (error) {
+        msg.textContent = `❌ Gagal mendaftar: ${error.message}`;
         return;
       }
 
-      console.log("✅ Pendaftaran berhasil:", anggotaData);
+      console.log("✅ Pendaftaran berhasil:", data);
       msg.textContent = "✅ Pendaftaran berhasil! Mengalihkan ke halaman verifikasi...";
 
       setTimeout(() => {
