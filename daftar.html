@@ -71,27 +71,24 @@
 
   <!-- === Supabase Client Setup === -->
   <script>
-    const supabaseUrl = "https://ubddfvcjbzuicsewohas.supabase.co";
-    const supabaseAnonKey =
+    const SUPABASE_URL = "https://ubddfvcjbzuicsewohas.supabase.co";
+    const SUPABASE_ANON_KEY =
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InViZGRmdmNqYnp1aWNzZXdvaGFzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE0NjA3NzgsImV4cCI6MjA3NzAzNjc3OH0.zwOBGrk2iekzlMlL2_fOqRqFUaeOCaQR1Km_fAEP7jQ";
 
-    if (window.supabase) {
-      window.supabase = supabase.createClient(supabaseUrl, supabaseAnonKey);
-      console.log("✅ Supabase client berhasil dibuat");
-    } else {
-      console.error("❌ Supabase SDK tidak dimuat!");
-    }
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    window.supabase = supabaseClient;
   </script>
 
-  <!-- === Script Pendaftaran (langsung di sini) === -->
+  <!-- === Script Daftar === -->
   <script>
-    window.onload = async function () {
-      console.log("✅ DOM siap (window.onload dipanggil)");
+    document.addEventListener("DOMContentLoaded", async () => {
+      console.log("✅ daftar.js dimuat dan DOM siap");
+
       const daftarBtn = document.getElementById("daftar-btn");
       const msg = document.getElementById("msg");
 
       if (!daftarBtn) {
-        console.error("❌ Tombol #daftar-btn tidak ditemukan!");
+        console.error("❌ Tombol #daftar-btn tidak ditemukan di halaman!");
         return;
       }
 
@@ -139,13 +136,18 @@
             return;
           }
 
-          msg.textContent = "✅ Pendaftaran berhasil! Tunggu persetujuan admin sebelum login.";
+          console.log("✅ Pendaftaran berhasil:", data);
+          msg.textContent = "✅ Pendaftaran berhasil! Mengalihkan ke halaman verifikasi...";
+
+          setTimeout(() => {
+            window.location.href = "verifikasi_anggota.html";
+          }, 1500);
         } catch (err) {
           console.error(err);
           msg.textContent = "❌ Terjadi kesalahan tidak terduga.";
         }
       });
-    };
+    });
   </script>
 </body>
 </html>
