@@ -1,9 +1,15 @@
+// Supabase Client Setup
+const SUPABASE_URL = "https://ubddfvcjbzuicsewohas.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InViZGRmdmNqYnp1aWNzZXdvaGFzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE0NjA3NzgsImV4cCI6MjA3NzAzNjc3OH0.zwOBGrk2iekzlMlL2_fOqRqFUaeOCaQR1Km_fAEP7jQ";
+
+const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+window.supabase = supabaseClient;
+
+// Script Daftar
 document.addEventListener("DOMContentLoaded", async () => {
   console.log("✅ daftar.js dimuat dan DOM siap");
 
   const daftarBtn = document.getElementById("daftar-btn");
-  console.log("🔍 daftarBtn:", daftarBtn); // <-- log tambahan
-
   const msg = document.getElementById("msg");
 
   if (!daftarBtn) {
@@ -25,17 +31,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value.trim();
 
-    if (
-      !nama || !jenis_kelamin || !umur || !agama ||
-      !status_hubungan || !blok || !rt || !rw ||
-      !email || !password
-    ) {
+    if (!nama || !jenis_kelamin || !umur || !agama || !status_hubungan || !blok || !rt || !rw || !email || !password) {
       msg.textContent = "⚠️ Semua kolom wajib diisi.";
       return;
     }
 
     try {
-      // 1️⃣ Daftarkan user di Supabase Auth
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
@@ -60,7 +61,12 @@ document.addEventListener("DOMContentLoaded", async () => {
         return;
       }
 
-      msg.textContent = "✅ Pendaftaran berhasil! Tunggu persetujuan admin sebelum login.";
+      console.log("✅ Pendaftaran berhasil:", data);
+      msg.textContent = "✅ Pendaftaran berhasil! Mengalihkan ke halaman verifikasi...";
+
+      setTimeout(() => {
+        window.location.href = "verifikasi_anggota.html";
+      }, 1500);
     } catch (err) {
       console.error(err);
       msg.textContent = "❌ Terjadi kesalahan tidak terduga.";
