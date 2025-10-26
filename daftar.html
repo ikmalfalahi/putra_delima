@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Daftar Anggota Baru - Putera Delima</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-card">
+      <h2>📝 Formulir Pendaftaran Anggota</h2>
+      
+      <input type="text" id="nama" placeholder="Nama Lengkap" required />
+      
+      <select id="jenis_kelamin" required>
+        <option value="">Pilih Jenis Kelamin</option>
+        <option value="Laki-laki">Laki-laki</option>
+        <option value="Perempuan">Perempuan</option>
+      </select>
+
+      <input type="number" id="umur" placeholder="Umur" required />
+      <input type="text" id="agama" placeholder="Agama" required />
+
+      <select id="status_hubungan" required>
+        <option value="">Status Hubungan</option>
+        <option value="Belum Menikah">Belum Menikah</option>
+        <option value="Menikah">Menikah</option>
+        <option value="Cerai">Cerai</option>
+      </select>
+
+      <input type="text" id="blok" placeholder="Blok (misal: A, B, C...)" required />
+      <input type="text" id="rt" placeholder="RT (misal: 01)" required />
+      <input type="text" id="rw" placeholder="RW (misal: 02)" required />
+
+      <input type="email" id="email" placeholder="Email" required />
+      <input type="password" id="password" placeholder="Password" required />
+
+      <button id="daftar-btn">Daftar</button>
+      <p id="msg"></p>
+      <p>Sudah punya akun? <a href="login.html">Login</a></p>
+    </div>
+  </div>
+
+  <script src="assets/js/supabase.js"></script>
+  <script src="assets/js/daftar.js"></script>
+</body>
+</html>
