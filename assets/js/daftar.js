@@ -2,7 +2,8 @@
 const SUPABASE_URL = "https://ubddfvcjbzuicsewohas.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InViZGRmdmNqYnp1aWNzZXdvaGFzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE0NjA3NzgsImV4cCI6MjA3NzAzNjc3OH0.zwOBGrk2iekzlMlL2_fOqRqFUaeOCaQR1Km_fAEP7jQ";
 
-const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+// Ganti supabase → Supabase untuk UMD
+const supabaseClient = Supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 window.supabase = supabaseClient;
 
 // Script Daftar
@@ -72,4 +73,19 @@ document.addEventListener("DOMContentLoaded", async () => {
       msg.textContent = "❌ Terjadi kesalahan tidak terduga.";
     }
   });
+
+  // Toggle password
+  const togglePass = document.getElementById("toggle-pass");
+  const passwordInput = document.getElementById("password");
+  if (togglePass && passwordInput) {
+    togglePass.addEventListener("click", () => {
+      if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+        togglePass.textContent = "Sembunyikan";
+      } else {
+        passwordInput.type = "password";
+        togglePass.textContent = "Tampilkan";
+      }
+    });
+  }
 });
