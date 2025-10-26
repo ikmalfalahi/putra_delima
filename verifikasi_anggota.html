@@ -3,31 +3,44 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Verifikasi Anggota - Putera Delima</title>
-  <link rel="stylesheet" href="assets/css/admin.css">
+  <title>Verifikasi Anggota | Admin Putera Delima</title>
+  <link rel="stylesheet" href="assets/css/verifikasi_anggota.css">
 </head>
 <body>
   <header class="navbar">
     <h1>👥 Verifikasi Anggota Baru</h1>
+    <nav>
+      <a href="admin.html">📊 Dashboard</a>
+      <a href="keuangan.html">💰 Keuangan</a>
+      <button id="logout-btn">Logout</button>
+    </nav>
   </header>
 
-  <section class="admin-container">
-    <table class="admin-table">
-      <thead>
-        <tr>
-          <th>No</th>
-          <th>Nama</th>
-          <th>Jenis Kelamin</th>
-          <th>Umur</th>
-          <th>Agama</th>
-          <th>Status</th>
-          <th>Alamat (Blok/RT/RW)</th>
-          <th>Aksi</th>
-        </tr>
-      </thead>
-      <tbody id="anggota-body"></tbody>
-    </table>
-  </section>
+  <main class="container">
+    <div class="table-card">
+      <h2>Daftar Anggota Baru</h2>
+      <p class="sub">Kelola pendaftaran anggota baru. Setujui atau tolak permintaan mereka.</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>Nama</th>
+            <th>Jenis Kelamin</th>
+            <th>Umur</th>
+            <th>Agama</th>
+            <th>Status Hubungan</th>
+            <th>Alamat (Blok/RT/RW)</th>
+            <th>Status</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody id="anggota-body">
+          <tr><td colspan="9" class="loading">Memuat data...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
 
   <script src="assets/js/supabase.js"></script>
   <script src="assets/js/verifikasi_anggota.js"></script>
