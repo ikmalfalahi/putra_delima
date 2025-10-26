@@ -1,4 +1,3 @@
-// assets/js/daftar.js
 document.addEventListener("DOMContentLoaded", () => {
   const daftarBtn = document.getElementById("daftar-btn");
   const msg = document.getElementById("msg");
@@ -26,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const nama = document.getElementById("nama").value.trim();
     const jenis_kelamin = document.getElementById("jenis_kelamin").value;
-    const umur = document.getElementById("umur").value;
+    const umurStr = document.getElementById("umur").value.trim();
     const agama = document.getElementById("agama").value.trim();
     const status_hubungan = document.getElementById("status_hubungan").value;
     const blok = document.getElementById("blok").value.trim();
@@ -35,13 +34,34 @@ document.addEventListener("DOMContentLoaded", () => {
     const email = document.getElementById("email").value.trim();
     const password = passwordInput.value.trim();
 
-    if (!nama || !jenis_kelamin || !umur || !agama || !status_hubungan || !blok || !rt || !rw || !email || !password) {
+    // Validasi semua field wajib
+    if (!nama || !jenis_kelamin || !umurStr || !agama || !status_hubungan || !blok || !rt || !rw || !email || !password) {
       msg.textContent = "⚠️ Semua kolom wajib diisi.";
       return;
     }
 
+    // Validasi email
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+      msg.textContent = "⚠️ Email tidak valid.";
+      return;
+    }
+
+    // Validasi password minimal 6 karakter
+    if (password.length < 6) {
+      msg.textContent = "⚠️ Kata sandi minimal 6 karakter.";
+      return;
+    }
+
+    // Validasi umur angka
+    const umur = parseInt(umurStr);
+    if (isNaN(umur) || umur <= 0) {
+      msg.textContent = "⚠️ Umur harus angka positif.";
+      return;
+    }
+
     try {
-      // Signup user → trigger handle_new_user() otomatis insert ke profiles
+      // Signup user → trigger handle_new_user otomatis insert ke profiles
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
