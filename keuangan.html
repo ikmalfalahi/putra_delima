@@ -1,74 +1,92 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Keuangan - Putera Delima</title>
-  <link rel="stylesheet" href="assets/css/admin.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Keuangan | Admin Putera Delima</title>
+  <link rel="stylesheet" href="assets/css/keuangan.css">
 </head>
 <body>
+  <!-- === Header Navbar === -->
   <header class="navbar">
-    <h1>💰 Keuangan Organisasi</h1>
-    <nav>
-    <a href="admin.html">Iuran</a>
-    <a href="keuangan.html">Keuangan</a>
-    <a href="profil_anggota.html">Profil</a>
-    <button id="logout-btn" class="logout-btn">Logout</button>
+    <div class="nav-left">
+      <h1>💰 Keuangan - Putera Delima</h1>
+    </div>
+    <div class="hamburger" id="hamburger">
+      ☰
+    </div>
+    <nav class="nav-links" id="nav-links">
+      <a href="admin.html">Dashboard</a>
+      <a href="keuangan.html" class="active">Keuangan</a>
+      <a href="verifikasi_anggota.html">Verifikasi</a>
+      <button id="logout-btn">Logout</button>
     </nav>
   </header>
 
-  <section class="dashboard">
-    <div class="dash-card total">
-      <h3>💸 Total Pemasukan</h3>
-      <p id="total-pemasukan">Rp 0</p>
-    </div>
-    <div class="dash-card lunas">
-      <h3>📉 Total Pengeluaran</h3>
-      <p id="total-pengeluaran">Rp 0</p>
-    </div>
-    <div class="dash-card dana">
-      <h3>📊 Saldo Akhir</h3>
-      <p id="saldo-akhir">Rp 0</p>
-    </div>
-  </section>
+  <!-- === Content === -->
+  <main class="container">
+    <section class="summary">
+      <div class="card pemasukan">
+        <h3>📈 Total Pemasukan</h3>
+        <p id="total-pemasukan">Rp 0</p>
+      </div>
+      <div class="card pengeluaran">
+        <h3>📉 Total Pengeluaran</h3>
+        <p id="total-pengeluaran">Rp 0</p>
+      </div>
+      <div class="card saldo">
+        <h3>💰 Saldo Akhir</h3>
+        <p id="saldo-akhir">Rp 0</p>
+      </div>
+    </section>
 
-  <section class="admin-container">
-    <div class="admin-actions">
-      <button id="add-transaksi">➕ Tambah Transaksi</button>
-      <button id="refresh-keuangan">🔄 Refresh</button>
-    </div>
+    <section class="table-card">
+      <div class="action-bar">
+        <h2>Catatan Keuangan</h2>
+        <button id="tambah-keuangan">➕ Tambah Transaksi</button>
+      </div>
 
-    <table class="admin-table">
-      <thead>
-        <tr>
-          <th>No</th>
-          <th>Tanggal</th>
-          <th>Jenis</th>
-          <th>Keterangan</th>
-          <th>Jumlah</th>
-          <th>Aksi</th>
-        </tr>
-      </thead>
-      <tbody id="keuangan-body"></tbody>
-    </table>
-  </section>
+      <table>
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>Tanggal</th>
+            <th>Jenis</th>
+            <th>Keterangan</th>
+            <th>Jumlah (Rp)</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody id="tabel-keuangan">
+          <tr><td colspan="6" class="loading">🔄 Memuat data...</td></tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
 
-  <!-- Popup form -->
-  <div class="popup hidden" id="popup-form">
+  <!-- === Popup Form === -->
+  <div class="popup hidden" id="popup-keuangan">
     <div class="popup-content">
-      <h2 id="popup-title">Tambah Transaksi</h2>
-      <input type="date" id="tanggal" />
-      <select id="jenis">
+      <h2>Tambah Data Keuangan</h2>
+      <input type="date" id="tanggal" required />
+      <select id="jenis" required>
         <option value="">Pilih Jenis</option>
         <option value="pemasukan">Pemasukan</option>
         <option value="pengeluaran">Pengeluaran</option>
       </select>
-      <input type="text" id="keterangan" placeholder="Keterangan" />
-      <input type="number" id="jumlah" placeholder="Jumlah (Rp)" />
-      <button id="save-data">💾 Simpan</button>
-      <button id="cancel">Batal</button>
+      <input type="text" id="keterangan" placeholder="Keterangan" required />
+      <input type="number" id="jumlah" placeholder="Jumlah (Rp)" required />
+      <div class="popup-btns">
+        <button id="simpan-keuangan">💾 Simpan</button>
+        <button id="batal-keuangan">Batal</button>
+      </div>
     </div>
   </div>
+
+  <!-- === Footer === -->
+  <footer class="footer">
+    <p>© 2025 Putera Delima | Sistem Manajemen Keuangan</p>
+  </footer>
 
   <script src="assets/js/supabase.js"></script>
   <script src="assets/js/keuangan.js"></script>
