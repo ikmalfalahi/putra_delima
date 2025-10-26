@@ -5,6 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Profil | Putera Delima</title>
   <link rel="stylesheet" href="assets/css/profil.css">
+  <style>
+    body { font-family: Arial, sans-serif; background:#f4f6f8; margin:0; padding:0; }
+    header { background:#0056b3; color:#fff; padding:15px; display:flex; justify-content:space-between; align-items:center; }
+    main { max-width:600px; margin:30px auto; padding:20px; background:#fff; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.1); }
+    h1 { margin:0; }
+    .profile-card, .edit-card { margin-top:20px; }
+    p { margin:5px 0; }
+    label { display:block; margin-top:10px; font-weight:bold; }
+    input, select { width:100%; padding:8px; margin-top:5px; border-radius:4px; border:1px solid #ccc; }
+    button { margin-top:15px; padding:10px 15px; border:none; border-radius:4px; cursor:pointer; }
+    #edit-profile { background:#28a745; color:#fff; }
+    #save-profile { background:#007bff; color:#fff; }
+    #cancel-edit { background:#dc3545; color:#fff; margin-left:10px; }
+  </style>
 </head>
 <body>
   <header>
@@ -12,7 +26,8 @@
     <button id="logout-btn">Logout</button>
   </header>
 
-  <main class="container">
+  <main>
+    <!-- Tampilan Profil -->
     <div class="profile-card">
       <p><strong>Nama:</strong> <span id="nama">-</span></p>
       <p><strong>Email:</strong> <span id="email">-</span></p>
@@ -24,6 +39,43 @@
       <p><strong>Role:</strong> <span id="role">-</span></p>
       <p><strong>Status:</strong> <span id="status">-</span></p>
       <button id="edit-profile">✏️ Edit Profil</button>
+    </div>
+
+    <!-- Form Edit Profil (default hidden) -->
+    <div class="edit-card" style="display:none;">
+      <h2>Edit Profil</h2>
+      <form id="form-edit-profile">
+        <label>Nama</label>
+        <input type="text" id="input-nama" required>
+
+        <label>Jenis Kelamin</label>
+        <select id="input-jenis_kelamin">
+          <option value="">Pilih</option>
+          <option value="Laki-laki">Laki-laki</option>
+          <option value="Perempuan">Perempuan</option>
+        </select>
+
+        <label>Umur</label>
+        <input type="number" id="input-umur" min="0">
+
+        <label>Agama</label>
+        <input type="text" id="input-agama">
+
+        <label>Status Hubungan</label>
+        <input type="text" id="input-status_hubungan">
+
+        <label>Blok</label>
+        <input type="text" id="input-blok">
+
+        <label>RT</label>
+        <input type="text" id="input-rt">
+
+        <label>RW</label>
+        <input type="text" id="input-rw">
+
+        <button type="submit" id="save-profile">💾 Simpan</button>
+        <button type="button" id="cancel-edit">❌ Batal</button>
+      </form>
     </div>
   </main>
 
