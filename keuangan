@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Keuangan - Putera Delima</title>
+  <link rel="stylesheet" href="assets/css/admin.css" />
+</head>
+<body>
+  <header class="navbar">
+    <h1>💰 Keuangan Organisasi</h1>
+    <nav>
+      <a href="admin.html">Iuran</a>
+      <a href="keuangan.html" class="active">Keuangan</a>
+      <button id="logout-btn" class="logout-btn">Logout</button>
+    </nav>
+  </header>
+
+  <section class="dashboard">
+    <div class="dash-card total">
+      <h3>💸 Total Pemasukan</h3>
+      <p id="total-pemasukan">Rp 0</p>
+    </div>
+    <div class="dash-card lunas">
+      <h3>📉 Total Pengeluaran</h3>
+      <p id="total-pengeluaran">Rp 0</p>
+    </div>
+    <div class="dash-card dana">
+      <h3>📊 Saldo Akhir</h3>
+      <p id="saldo-akhir">Rp 0</p>
+    </div>
+  </section>
+
+  <section class="admin-container">
+    <div class="admin-actions">
+      <button id="add-transaksi">➕ Tambah Transaksi</button>
+      <button id="refresh-keuangan">🔄 Refresh</button>
+    </div>
+
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Tanggal</th>
+          <th>Jenis</th>
+          <th>Keterangan</th>
+          <th>Jumlah</th>
+          <th>Aksi</th>
+        </tr>
+      </thead>
+      <tbody id="keuangan-body"></tbody>
+    </table>
+  </section>
+
+  <!-- Popup form -->
+  <div class="popup hidden" id="popup-form">
+    <div class="popup-content">
+      <h2 id="popup-title">Tambah Transaksi</h2>
+      <input type="date" id="tanggal" />
+      <select id="jenis">
+        <option value="">Pilih Jenis</option>
+        <option value="pemasukan">Pemasukan</option>
+        <option value="pengeluaran">Pengeluaran</option>
+      </select>
+      <input type="text" id="keterangan" placeholder="Keterangan" />
+      <input type="number" id="jumlah" placeholder="Jumlah (Rp)" />
+      <button id="save-data">💾 Simpan</button>
+      <button id="cancel">Batal</button>
+    </div>
+  </div>
+
+  <script src="assets/js/supabase.js"></script>
+  <script src="assets/js/keuangan.js"></script>
+</body>
+</html>
