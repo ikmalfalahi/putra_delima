@@ -1,27 +1,26 @@
 // assets/js/navbar.js
 document.addEventListener("DOMContentLoaded", async () => {
-  // ---------- Smart path detection ----------
+  // ===== Detect Relative Path for Navbar =====
   const pathDepth = window.location.pathname.split("/").filter(Boolean).length;
-  const navbarPath = pathDepth > 0 ? `${'../'.repeat(pathDepth)}navbar.html` : 'navbar.html';
+  const navbarPath = pathDepth > 0 ? `${'../'.repeat(pathDepth)}navbar.html` : "navbar.html";
 
-  // Placeholder harus ada di halaman
   const placeholder = document.getElementById("navbar-placeholder");
   if (!placeholder) return;
 
   try {
     const res = await fetch(navbarPath);
-    if (!res.ok) throw new Error(`Failed to load navbar (${res.status})`);
+    if (!res.ok) throw new Error(`Navbar gagal dimuat (${res.status})`);
     placeholder.innerHTML = await res.text();
   } catch (err) {
-    console.error(err);
-    placeholder.innerHTML = `<div style="background:#eee;color:#333;padding:12px;text-align:center;">Gagal memuat navbar</div>`;
+    console.error("❌ Navbar load error:", err);
+    placeholder.innerHTML = `<div style="background:#0056b3;color:#fff;padding:12px;text-align:center;">Gagal memuat navbar</div>`;
     return;
   }
 
-  // small wait to ensure DOM nodes inside navbar are available
-  await new Promise(r => setTimeout(r, 80));
+  // Tunggu DOM navbar siap
+  await new Promise((r) => setTimeout(r, 80));
 
-  // ---------- resolve element references ----------
+  // ===== Ambil Elemen =====
   const hamburger = document.getElementById("pd-hamburger");
   const navLinks = document.getElementById("pd-navlinks");
   const profileBtn = document.getElementById("pd-profile-btn");
@@ -31,61 +30,59 @@ document.addEventListener("DOMContentLoaded", async () => {
   const logoutBtn = document.getElementById("pd-logout");
   const dashboardLink = document.getElementById("pd-link-dashboard");
 
-  // ---------- Supabase auth check ----------
+  // ===== Cek Supabase Client =====
   if (!window.supabase) {
-    console.warn("Supabase client not found. Navbar will show default user.");
+    console.warn("⚠️ Supabase client belum dimuat!");
     return;
   }
 
-  const { data: { user } } = await supabase.auth.getUser();
-  // If page is public (index/login), we should not always redirect.
-  const publicPages = ["", "index.html", "login.html", "register.html"];
+  // ===== Cek User Login =====
+  const { data: { user }, error } = await supabase.auth.getUser();
   const currentPage = window.location.pathname.split("/").pop() || "index.html";
+  const publicPages = ["", "index.html", "login.html", "register.html"];
 
   if (!user && !publicPages.includes(currentPage)) {
-    // if not logged in and not public page, redirect to login (use relative path)
-    const loginPath = pathDepth > 0 ? `${'../'.repeat(pathDepth)}login.html` : 'login.html';
+    const loginPath = pathDepth > 0 ? `${'../'.repeat(pathDepth)}login.html` : "login.html";
     window.location.href = loginPath;
     return;
   }
 
-  // ---------- populate profile data ----------
+  // ===== Tampilkan Profil User =====
   if (user) {
-    // try to fetch profile row (nama + role)
     try {
-      const { data: profile, error } = await supabase
+      const { data: profile, error: profileError } = await supabase
         .from("profiles")
         .select("nama, role")
         .eq("id", user.id)
         .single();
 
-      if (!error && profile) {
-        profileNameEl.textContent = profile.nama || user.email || "User";
-        profilePhotoEl.textContent = (profile.nama ? profile.nama[0].toUpperCase() : (user.email ? user.email[0].toUpperCase() : "U"));
-        // show dashboard link if admin
-        if (profile.role === "admin" && dashboardLink) dashboardLink.classList.remove("hidden");
-      } else {
-        // fallback to email if profile missing
-        profileNameEl.textContent = user.email || "User";
-        profilePhotoEl.textContent = (user.email ? user.email[0].toUpperCase() : "U");
-      }
+      const userNama = profile?.nama || user.email || "User";
+      const initial = userNama.charAt(0).toUpperCase();
+
+      profileNameEl.textContent = userNama;
+      profilePhotoEl.textContent = initial;
+
+      if (profile?.role === "admin" && dashboardLink)
+        dashboardLink.classList.remove("hidden");
     } catch (err) {
-      console.warn("Error loading profile:", err.message);
-      profileNameEl.textContent = user.email || "User";
-      profilePhotoEl.textContent = (user.email ? user.email[0].toUpperCase() : "U");
+      console.warn("⚠️ Gagal ambil profil:", err.message);
+      const fallback = user.email || "User";
+      profileNameEl.textContent = fallback;
+      profilePhotoEl.textContent = fallback.charAt(0).toUpperCase();
     }
   }
 
-  // ---------- dropdown toggle ----------
+  // ===== Dropdown Profil =====
   if (profileBtn && dropdown) {
     profileBtn.addEventListener("click", (e) => {
       e.stopPropagation();
-      const isHidden = dropdown.classList.contains("hidden");
-      dropdown.setAttribute("aria-hidden", String(!isHidden));
-      profileBtn.setAttribute("aria-expanded", String(isHidden));
       dropdown.classList.toggle("hidden");
+      const expanded = !dropdown.classList.contains("hidden");
+      profileBtn.setAttribute("aria-expanded", expanded);
+      dropdown.setAttribute("aria-hidden", !expanded);
     });
-    // click outside closes dropdown
+
+    // Tutup dropdown di luar klik
     document.addEventListener("click", (e) => {
       if (!profileBtn.contains(e.target) && !dropdown.contains(e.target)) {
         dropdown.classList.add("hidden");
@@ -94,23 +91,26 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 
-  // ---------- logout ----------
+  // ===== Logout =====
   if (logoutBtn) {
     logoutBtn.addEventListener("click", async () => {
       await supabase.auth.signOut();
-      const loginPath = pathDepth > 0 ? `${'../'.repeat(pathDepth)}login.html` : 'login.html';
+      const loginPath = pathDepth > 0 ? `${'../'.repeat(pathDepth)}login.html` : "login.html";
       window.location.href = loginPath;
     });
   }
 
-  // ---------- hamburger responsive ----------
+  // ===== Hamburger (Responsif) =====
   if (hamburger && navLinks) {
-    hamburger.addEventListener("click", () => navLinks.classList.toggle("show"));
+    hamburger.addEventListener("click", () => {
+      navLinks.classList.toggle("show");
+      dropdown.classList.add("hidden"); // tutup dropdown saat toggle menu
+    });
   }
 
-  // ---------- highlight current link ----------
-  document.querySelectorAll(".pd-navlinks a").forEach(a => {
-    const href = a.getAttribute("href");
-    if (href === currentPage) a.classList.add("active");
+  // ===== Highlight Link Aktif =====
+  document.querySelectorAll(".pd-navlinks a").forEach((link) => {
+    const href = link.getAttribute("href");
+    if (href === currentPage) link.classList.add("active");
   });
 });
