@@ -19,8 +19,8 @@ document.addEventListener("DOMContentLoaded", async () => {
       `<div style="background:#eee;color:#333;padding:12px;text-align:center;">Navbar gagal dimuat</div>`;
     return;
   }
-  
-  // Tunggu DOM navbar siap
+
+  // Tunggu navbar terpasang ke DOM
   await new Promise((r) => setTimeout(r, 80));
 
   // ===== Ambil Elemen =====
@@ -32,6 +32,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const profilePhotoEl = document.getElementById("pd-profile-photo");
   const logoutBtn = document.getElementById("pd-logout");
   const dashboardLink = document.getElementById("pd-link-dashboard");
+  const profileLink = document.getElementById("pd-link-profil");
 
   // ===== Cek Supabase Client =====
   if (!window.supabase) {
@@ -45,33 +46,47 @@ document.addEventListener("DOMContentLoaded", async () => {
   const publicPages = ["", "index.html", "login.html", "register.html"];
 
   if (!user && !publicPages.includes(currentPage)) {
-    const loginPath = pathDepth > 0 ? `${'../'.repeat(pathDepth)}login.html` : "login.html";
-    window.location.href = loginPath;
+    window.location.href = `${basePath}login.html`;
     return;
   }
 
-  // ===== Tampilkan Profil User =====
+  // ===== Jika user login, tampilkan profil =====
   if (user) {
     try {
       const { data: profile, error: profileError } = await supabase
         .from("profiles")
-        .select("nama, role")
+        .select("nama, role, avatar_url")
         .eq("id", user.id)
         .single();
 
-      const userNama = profile?.nama || user.email || "User";
-      const initial = userNama.charAt(0).toUpperCase();
+      if (profileError) throw profileError;
 
-      profileNameEl.textContent = userNama;
-      profilePhotoEl.textContent = initial;
+      const namaUser = profile?.nama || user.email || "User";
+      const initial = namaUser.charAt(0).toUpperCase();
 
-      if (profile?.role === "admin" && dashboardLink)
+      profileNameEl.textContent = namaUser;
+
+      // === Avatar ===
+      if (profile?.avatar_url) {
+        profilePhotoEl.src = profile.avatar_url;
+      } else {
+        profilePhotoEl.src = `${basePath}assets/img/default-avatar.png`;
+        profilePhotoEl.alt = initial;
+      }
+
+      // === Atur link profil sesuai role ===
+      if (profile?.role === "admin") {
+        profileLink.href = `${basePath}profil_admin.html`;
         dashboardLink.classList.remove("hidden");
+      } else {
+        profileLink.href = `${basePath}profil_anggota.html`;
+        dashboardLink.classList.add("hidden");
+      }
+
     } catch (err) {
-      console.warn("⚠️ Gagal ambil profil:", err.message);
-      const fallback = user.email || "User";
-      profileNameEl.textContent = fallback;
-      profilePhotoEl.textContent = fallback.charAt(0).toUpperCase();
+      console.warn("⚠️ Gagal ambil data profil:", err.message);
+      profileNameEl.textContent = user.email || "User";
+      profilePhotoEl.src = `${basePath}assets/img/default-avatar.png`;
     }
   }
 
@@ -85,7 +100,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       dropdown.setAttribute("aria-hidden", !expanded);
     });
 
-    // Tutup dropdown di luar klik
+    // Tutup dropdown saat klik di luar
     document.addEventListener("click", (e) => {
       if (!profileBtn.contains(e.target) && !dropdown.contains(e.target)) {
         dropdown.classList.add("hidden");
@@ -98,8 +113,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   if (logoutBtn) {
     logoutBtn.addEventListener("click", async () => {
       await supabase.auth.signOut();
-      const loginPath = pathDepth > 0 ? `${'../'.repeat(pathDepth)}login.html` : "login.html";
-      window.location.href = loginPath;
+      alert("Anda telah logout.");
+      window.location.href = `${basePath}login.html`;
     });
   }
 
@@ -107,7 +122,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   if (hamburger && navLinks) {
     hamburger.addEventListener("click", () => {
       navLinks.classList.toggle("show");
-      dropdown.classList.add("hidden"); // tutup dropdown saat toggle menu
+      dropdown.classList.add("hidden"); // Tutup dropdown saat buka menu
     });
   }
 
