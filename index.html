@@ -7,14 +7,6 @@
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-  <header class="navbar">
-    <h1>✨ Putera Delima ✨</h1>
-    <nav>
-      <a href="#tentang">Tentang</a>
-      <a href="#galeri">Galeri</a>
-      <a href="login.html" class="btn-login">Login</a>
-    </nav>
-  </header>
 
   <!-- ==== Landing Section ==== -->
   <section class="hero">
@@ -72,6 +64,21 @@
   <footer>
     <p>© 2025 Putera Delima. All rights reserved.</p>
   </footer>
+  <div id="navbar-placeholder"></div>
+
+  <main class="container">
+    <h2>Selamat datang di Dashboard Admin</h2>
+    <p>Kontrol penuh manajemen anggota dan keuangan.</p>
+  </main>
+
+  <script>
+    // Muat navbar.html secara dinamis
+    document.addEventListener("DOMContentLoaded", async () => {
+      const placeholder = document.getElementById("navbar-placeholder");
+      const res = await fetch("navbar.html");
+      placeholder.innerHTML = await res.text();
+    });
+  </script>
 
   <!-- === Supabase SDK === -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -84,4 +91,5 @@
 
 </body>
 </html>
+
 
