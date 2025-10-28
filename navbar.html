@@ -1,24 +1,36 @@
 <!-- navbar.html -->
 <header class="pd-navbar">
   <div class="pd-container">
+
+    <!-- === Logo === -->
     <div class="pd-left">
-      <a class="pd-logo" href="index.html">Putra Delima</a>
+      <a class="pd-logo" href="index.html" aria-label="Beranda Putra Delima">
+        <img src="assets/img/Logo.png" alt="Logo Putra Delima" class="pd-logo-img" />
+        <span class="pd-logo-text">Putra Delima</span>
+      </a>
     </div>
 
-    <button id="pd-hamburger" class="pd-hamburger" aria-label="Toggle menu">☰</button>
+    <!-- === Hamburger (mobile) === -->
+    <button id="pd-hamburger" class="pd-hamburger" aria-label="Toggle menu" aria-controls="pd-navlinks" aria-expanded="false">
+      ☰
+    </button>
 
-    <nav id="pd-navlinks" class="pd-navlinks" role="navigation" aria-label="Main navigation">
+    <!-- === Navigasi Utama === -->
+    <nav id="pd-navlinks" class="pd-navlinks" role="navigation" aria-label="Navigasi utama">
       <a href="index.html">Beranda</a>
       <a href="anggota.html">Anggota</a>
       <a href="keuangan.html">Keuangan</a>
       <a href="profil_anggota.html">Profil</a>
     </nav>
 
+    <!-- === Profil Dropdown === -->
     <div class="pd-profile">
-      <button id="pd-profile-btn" class="pd-profile-btn" aria-haspopup="true" aria-expanded="false">
-        <span id="pd-profile-photo" class="pd-profile-photo">U</span>
+      <button id="pd-profile-btn" class="pd-profile-btn" aria-haspopup="menu" aria-expanded="false">
+        <img id="pd-profile-photo" src="assets/img/default-avatar.png" alt="Foto Profil" class="pd-profile-photo" />
         <span id="pd-profile-name" class="pd-profile-name">User</span>
-        <svg class="pd-caret" width="10" height="6" viewBox="0 0 10 6" aria-hidden="true"><path d="M0 0 L5 6 L10 0" fill="none" stroke="#fff" stroke-width="1.2"/></svg>
+        <svg class="pd-caret" width="10" height="6" viewBox="0 0 10 6" aria-hidden="true">
+          <path d="M0 0 L5 6 L10 0" fill="none" stroke="#fff" stroke-width="1.2" />
+        </svg>
       </button>
 
       <div id="pd-dropdown" class="pd-dropdown hidden" role="menu" aria-hidden="true">
