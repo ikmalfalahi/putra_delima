@@ -3,41 +3,58 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Putera Delima - Organisasi</title>
+  <title>Putra Delima | Organisasi Sosial & Kebersamaan</title>
+
+  <!-- === Stylesheets === -->
+  <link rel="stylesheet" href="assets/css/navbar.css">
   <link rel="stylesheet" href="assets/css/style.css">
+
+  <!-- === Supabase SDK === -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="assets/js/supabase.js"></script>
 </head>
 <body>
 
-  <!-- ==== Landing Section ==== -->
+  <!-- === Navbar Global Placeholder === -->
+  <div id="navbar-placeholder"></div>
+
+  <!-- === Hero Section === -->
   <section class="hero">
-    <h2>Selamat Datang di Organisasi Putera Delima</h2>
+    <h2>Selamat Datang di Organisasi <span class="highlight">Putra Delima</span></h2>
     <p>Bersama membangun kebersamaan, solidaritas, dan kepedulian.</p>
   </section>
 
-  <!-- ==== Accordion Tentang ==== -->
+  <!-- === Tentang Kami === -->
   <section id="tentang" class="accordion-section">
     <h2>📜 Tentang Kami</h2>
 
     <div class="accordion">
       <button class="accordion-btn">Profil Organisasi</button>
       <div class="accordion-content">
-        <p>Putera Delima adalah organisasi sosial yang berfokus pada kegiatan kemasyarakatan dan pengembangan generasi muda.</p>
+        <p>
+          <strong>Putra Delima</strong> adalah organisasi sosial yang berfokus pada kegiatan kemasyarakatan,
+          pengembangan generasi muda, dan mempererat tali persaudaraan antarwarga.
+        </p>
       </div>
 
       <button class="accordion-btn">Visi dan Misi</button>
       <div class="accordion-content">
-        <p><strong>Visi:</strong> Menjadi wadah positif bagi generasi muda yang aktif dan peduli.</p>
-        <p><strong>Misi:</strong> Melaksanakan kegiatan sosial, mempererat persaudaraan, dan menumbuhkan semangat kebersamaan.</p>
+        <p><strong>Visi:</strong> Menjadi wadah positif bagi generasi muda yang aktif, peduli, dan berkarakter.</p>
+        <p><strong>Misi:</strong> Melaksanakan kegiatan sosial, mempererat persaudaraan, serta menumbuhkan semangat kebersamaan.</p>
       </div>
 
       <button class="accordion-btn">Struktur Pengurus</button>
       <div class="accordion-content">
-        <p>Ketua: Ahmad Fauzi<br>Sekretaris: Laila Nur<br>Bendahara: Fikri H.</p>
+        <p>
+          Ketua: Ahmad Fauzi<br>
+          Sekretaris: Laila Nur<br>
+          Bendahara: Fikri H.
+        </p>
       </div>
     </div>
   </section>
 
-  <!-- ==== Galeri Kegiatan ==== -->
+  <!-- === Galeri Kegiatan === -->
   <section id="galeri" class="gallery-section">
     <h2>📸 Galeri Kegiatan</h2>
 
@@ -61,35 +78,27 @@
     </div>
   </section>
 
-  <footer>
-    <p>© 2025 Putera Delima. All rights reserved.</p>
+  <!-- === Footer === -->
+  <footer class="footer">
+    <p>© 2025 Putra Delima | Sistem Manajemen Iuran & Organisasi</p>
   </footer>
-  <div id="navbar-placeholder"></div>
 
-  <main class="container">
-    <h2>Selamat datang di Dashboard Admin</h2>
-    <p>Kontrol penuh manajemen anggota dan keuangan.</p>
-  </main>
-
+  <!-- === Script: Navbar Loader === -->
   <script>
-    // Muat navbar.html secara dinamis
     document.addEventListener("DOMContentLoaded", async () => {
-      const placeholder = document.getElementById("navbar-placeholder");
-      const res = await fetch("navbar.html");
-      placeholder.innerHTML = await res.text();
+      try {
+        const placeholder = document.getElementById("navbar-placeholder");
+        const res = await fetch("navbar.html");
+        placeholder.innerHTML = await res.text();
+      } catch (err) {
+        console.error("❌ Gagal memuat navbar:", err);
+      }
     });
   </script>
 
-  <!-- === Supabase SDK === -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<!-- === Supabase Client Setup === -->
-<script src="assets/js/supabase.js"></script>
-
-<!-- === Script Pendaftaran === -->
-<script src="assets/js/daftar.js"></script>
+  <!-- === JS Files === -->
+  <script src="assets/js/navbar.js"></script>
+  <script src="assets/js/daftar.js"></script>
 
 </body>
 </html>
-
-
