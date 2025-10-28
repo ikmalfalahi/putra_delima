@@ -1,8 +1,10 @@
 // assets/js/navbar.js
 document.addEventListener("DOMContentLoaded", async () => {
-  // ===== Detect Relative Path for Navbar =====
-  const pathDepth = window.location.pathname.split("/").filter(Boolean).length;
-  const navbarPath = pathDepth > 0 ? `${'../'.repeat(pathDepth)}navbar.html` : "navbar.html";
+  // --- Path fix untuk GitHub Pages ---
+  const basePath = window.location.pathname.includes("/putra_delima/")
+    ? "/putra_delima/"
+    : "/";
+  const navbarPath = `${basePath}navbar.html`;
 
   const placeholder = document.getElementById("navbar-placeholder");
   if (!placeholder) return;
@@ -13,10 +15,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     placeholder.innerHTML = await res.text();
   } catch (err) {
     console.error("❌ Navbar load error:", err);
-    placeholder.innerHTML = `<div style="background:#0056b3;color:#fff;padding:12px;text-align:center;">Gagal memuat navbar</div>`;
+    placeholder.innerHTML =
+      `<div style="background:#eee;color:#333;padding:12px;text-align:center;">Navbar gagal dimuat</div>`;
     return;
   }
-
+  
   // Tunggu DOM navbar siap
   await new Promise((r) => setTimeout(r, 80));
 
