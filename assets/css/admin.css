@@ -1,4 +1,4 @@
-/* === BASE === */
+/* === RESET DASAR === */
 * {
   margin: 0;
   padding: 0;
@@ -7,93 +7,50 @@
 }
 
 body {
-  background: linear-gradient(135deg, #00aaff, #007bff);
+  background: linear-gradient(90deg, #0056b3, #00aaff);
   color: #fff;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-/* === NAVBAR === */
-.navbar {
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(15px);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 40px;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
-
-.navbar h1 {
-  font-size: 1.3rem;
-  font-weight: 600;
-}
-
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-.nav-links a,
-.nav-links button {
-  text-decoration: none;
-  color: #fff;
-  background: rgba(255, 255, 255, 0.25);
-  border: none;
-  padding: 8px 14px;
-  border-radius: 10px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  transition: 0.3s;
-}
-
-.nav-links a:hover,
-.nav-links button:hover {
-  background: rgba(255, 255, 255, 0.45);
-}
-
-.nav-links .active {
-  background: rgba(255, 255, 255, 0.5);
-  font-weight: 600;
-}
-
-/* === DASHBOARD CARDS === */
+/* === DASHBOARD CARD === */
 .dashboard {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
   gap: 20px;
-  padding: 30px 40px;
+  padding: 40px 30px;
 }
 
 .dash-card {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(10px);
-  border-radius: 15px;
+  border-radius: 16px;
   padding: 20px;
   text-align: center;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  transition: transform 0.25s ease;
+}
+
+.dash-card:hover {
+  transform: translateY(-4px);
 }
 
 .dash-card h3 {
   font-size: 1rem;
-  margin-bottom: 8px;
-  color: #fff;
+  font-weight: 600;
+  margin-bottom: 10px;
 }
 
 .dash-card p {
-  font-size: 1.7rem;
-  font-weight: bold;
+  font-size: 1.8rem;
+  font-weight: 700;
 }
 
-/* === TABLE SECTION === */
+/* === TABEL DATA === */
 .admin-container {
   flex: 1;
-  padding: 0 40px 40px 40px;
+  padding: 0 30px 40px 30px;
 }
 
 .admin-actions {
@@ -108,22 +65,24 @@ body {
   border: none;
   color: #fff;
   border-radius: 10px;
-  padding: 10px 15px;
+  padding: 10px 16px;
   cursor: pointer;
-  transition: 0.3s;
+  font-weight: 600;
+  transition: all 0.3s;
 }
 
 .admin-actions button:hover {
   background: linear-gradient(135deg, #00bfff, #007bff);
+  transform: translateY(-2px);
 }
 
 .admin-table {
   width: 100%;
   border-collapse: collapse;
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(12px);
   border-radius: 12px;
   overflow: hidden;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
 }
 
 .admin-table th, .admin-table td {
@@ -133,11 +92,15 @@ body {
   color: #fff;
 }
 
+.admin-table thead {
+  background: rgba(255, 255, 255, 0.25);
+}
+
 .admin-table tr:hover {
   background: rgba(255, 255, 255, 0.1);
 }
 
-/* === POPUP === */
+/* === POPUP FORM === */
 .popup {
   position: fixed;
   top: 0; left: 0;
@@ -146,21 +109,28 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 99;
+  z-index: 2000;
 }
 
-.hidden { display: none; }
+.hidden {
+  display: none;
+}
 
 .popup-content {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(15px);
-  border-radius: 15px;
-  padding: 30px;
+  border-radius: 16px;
+  padding: 25px 30px;
   width: 90%;
   max-width: 400px;
   text-align: center;
   color: #fff;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+}
+
+.popup-content h2 {
+  margin-bottom: 15px;
+  font-size: 1.2rem;
 }
 
 .popup-content input,
@@ -175,6 +145,10 @@ body {
   font-size: 0.95rem;
 }
 
+.popup-content input::placeholder {
+  color: rgba(255, 255, 255, 0.8);
+}
+
 .popup-btns {
   display: flex;
   justify-content: space-between;
@@ -187,8 +161,9 @@ body {
   border-radius: 8px;
   padding: 10px;
   color: #fff;
+  font-weight: 600;
   cursor: pointer;
-  transition: 0.3s;
+  transition: all 0.3s;
 }
 
 #save-data {
@@ -197,6 +172,14 @@ body {
 
 #cancel {
   background: linear-gradient(135deg, #ff6b6b, #c0392b);
+}
+
+#save-data:hover {
+  transform: translateY(-2px);
+}
+
+#cancel:hover {
+  transform: translateY(-2px);
 }
 
 /* === FOOTER === */
@@ -208,4 +191,5 @@ body {
   font-size: 0.9rem;
   color: #f1f1f1;
   margin-top: auto;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
 }
