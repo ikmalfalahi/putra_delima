@@ -7,8 +7,8 @@
 }
 
 body {
-  background: #fff;
-  color: #fff;
+  background: #ffffff; /* Putih bersih */
+  color: #111; /* Teks gelap */
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -23,38 +23,40 @@ body {
 }
 
 .card {
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
+  background: #ffffff;
+  border: 1px solid #ddd;
   border-radius: 15px;
   padding: 20px;
   text-align: center;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
-  transition: transform 0.25s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .card:hover {
   transform: translateY(-4px);
+  box-shadow: 0 5px 16px rgba(0, 0, 0, 0.15);
 }
 
 .card h3 {
   font-size: 1rem;
   margin-bottom: 8px;
-  color: #fff;
+  color: #007bff;
 }
 
 .card p {
   font-size: 1.5rem;
   font-weight: bold;
+  color: #111;
 }
 
 /* === TABLE SECTION === */
 .table-card {
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(12px);
+  background: #ffffff;
   border-radius: 20px;
   padding: 25px 30px;
   margin: 0 30px 40px;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ddd;
 }
 
 .action-bar {
@@ -67,10 +69,11 @@ body {
 .action-bar h2 {
   font-size: 1.3rem;
   font-weight: 600;
+  color: #111;
 }
 
 .action-bar button {
-  background: linear-gradient(135deg, #0099ff, #0066ff);
+  background: linear-gradient(135deg, #0056b3, #00aaff);
   border: none;
   color: #fff;
   border-radius: 10px;
@@ -81,7 +84,7 @@ body {
 }
 
 .action-bar button:hover {
-  background: linear-gradient(135deg, #00bfff, #007bff);
+  opacity: 0.9;
   transform: translateY(-2px);
 }
 
@@ -91,21 +94,23 @@ table {
   border-collapse: collapse;
   text-align: center;
   font-size: 0.9rem;
+  background: #fff;
 }
 
 thead {
-  background: rgba(255, 255, 255, 0.25);
+  background: linear-gradient(135deg, #0056b3, #00aaff);
+  color: #fff;
   font-weight: 600;
 }
 
 th, td {
   padding: 12px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-  color: #fff;
+  border-bottom: 1px solid #eee;
+  color: #111;
 }
 
 tr:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: #f9f9f9;
 }
 
 .loading {
@@ -130,20 +135,20 @@ tr:hover {
 }
 
 .popup-content {
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(15px);
+  background: #ffffff;
   border-radius: 15px;
   padding: 25px 30px;
   width: 90%;
   max-width: 400px;
   text-align: center;
-  color: #fff;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+  color: #111;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.25);
 }
 
 .popup-content h2 {
   margin-bottom: 15px;
   font-size: 1.2rem;
+  color: #0056b3;
 }
 
 .popup-content input,
@@ -151,15 +156,15 @@ tr:hover {
   width: 100%;
   margin-bottom: 12px;
   padding: 10px;
-  border: none;
+  border: 1px solid #ccc;
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.3);
-  color: #fff;
+  background: #f9f9f9;
+  color: #111;
   font-size: 0.95rem;
 }
 
 .popup-content input::placeholder {
-  color: rgba(255, 255, 255, 0.8);
+  color: #777;
 }
 
 .popup-btns {
@@ -180,26 +185,26 @@ tr:hover {
 }
 
 #simpan-keuangan {
-  background: linear-gradient(135deg, #00b894, #019879);
+  background: linear-gradient(135deg, #00c851, #00994c);
 }
 
 #batal-keuangan {
-  background: linear-gradient(135deg, #ff6b6b, #c0392b);
+  background: linear-gradient(135deg, #ff4444, #cc0000);
 }
 
 #simpan-keuangan:hover,
 #batal-keuangan:hover {
   transform: translateY(-2px);
+  opacity: 0.9;
 }
 
 /* === FOOTER === */
 .footer {
   text-align: center;
   padding: 15px;
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
+  background: linear-gradient(90deg, #0056b3, #00aaff);
   font-size: 0.9rem;
-  color: #f1f1f1;
+  color: #fff;
   margin-top: auto;
-  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
 }
