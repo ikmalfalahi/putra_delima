@@ -15,7 +15,7 @@
 </head>
 <body>
 
-  <!-- === Navbar Global Placeholder === -->
+  <!-- === Navbar Placeholder === -->
   <div id="navbar-placeholder"></div>
 
   <!-- === Hero Section === -->
@@ -83,22 +83,9 @@
     <p>© 2025 Putra Delima | Sistem Manajemen Iuran & Organisasi</p>
   </footer>
 
-  <!-- === Script: Navbar Loader === -->
-  <script>
-    document.addEventListener("DOMContentLoaded", async () => {
-      try {
-        const placeholder = document.getElementById("navbar-placeholder");
-        const res = await fetch("navbar.html");
-        placeholder.innerHTML = await res.text();
-      } catch (err) {
-        console.error("❌ Gagal memuat navbar:", err);
-      }
-    });
-  </script>
-
-  <!-- === JS Files === -->
+  <!-- === Script Files === -->
   <script src="assets/js/navbar.js"></script>
+  <script src="assets/js/script.js"></script>
 
 </body>
 </html>
-
