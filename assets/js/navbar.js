@@ -1,13 +1,16 @@
 // assets/js/navbar.js
 document.addEventListener("DOMContentLoaded", async () => {
-  // === Cek Auth ===
+  // Tunggu navbar.html selesai dimuat
+  await new Promise(resolve => setTimeout(resolve, 300));
+
+  // === Supabase Auth Check ===
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) {
     window.location.href = "login.html";
     return;
   }
 
-  // === Navbar Responsive ===
+  // === Navbar Logic ===
   const hamburger = document.getElementById("hamburger");
   const navLinks = document.getElementById("nav-links");
   const logoutBtn = document.getElementById("logout-btn");
@@ -18,7 +21,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 
-  // === Logout ===
   if (logoutBtn) {
     logoutBtn.addEventListener("click", async () => {
       await supabase.auth.signOut();
