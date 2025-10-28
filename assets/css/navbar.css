@@ -28,36 +28,53 @@
   padding: 14px 24px;
 }
 
-/* === LOGO === */
+/* === LOGO AREA === */
 .pd-left {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.pd-logo {
-  color: var(--pd-white);
-  text-decoration: none;
-  font-weight: 700;
-  font-size: 1.15rem;
-  padding: 6px 10px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.06);
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-/* ✅ Tambahan baru agar ukuran logo proporsional */
-.pd-logo img {
-  height: 36px;   /* kamu bisa sesuaikan: 30–40px */
-  width: auto;
-  vertical-align: middle;
-  border-radius: 6px; /* opsional jika mau ujung logo sedikit membulat */
+/* Link utama logo */
+.pd-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: var(--pd-white);
+  font-weight: 700;
+  font-size: 1.1rem;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  transition: background 0.25s ease;
 }
 
 .pd-logo:hover {
-  background: rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* ✅ Ukuran logo disesuaikan agar proporsional */
+.pd-logo-img {
+  height: 34px; /* tinggi ideal */
+  width: auto;
+  border-radius: 6px;
+  vertical-align: middle;
+}
+
+/* Teks di sebelah logo */
+.pd-logo-text {
+  color: var(--pd-white);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  font-size: 1.05rem;
+}
+
+/* Responsive: sembunyikan teks di layar kecil */
+@media (max-width: 500px) {
+  .pd-logo-text {
+    display: none;
+  }
 }
 
 /* === NAV LINKS === */
@@ -126,16 +143,13 @@
   background: rgba(255, 255, 255, 0.22);
 }
 
+/* Gaya foto profil bulat */
 .pd-profile-photo {
   width: 32px;
   height: 32px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(255, 255, 255, 0.15);
   border-radius: 50%;
-  font-weight: 700;
-  font-size: 0.95rem;
+  object-fit: cover;
+  background: rgba(255, 255, 255, 0.2);
 }
 
 .pd-profile-name {
@@ -225,7 +239,7 @@
   }
 
   .pd-profile-name {
-    display: none;
+    display: none; /* Sembunyikan nama di layar kecil */
   }
 }
 
