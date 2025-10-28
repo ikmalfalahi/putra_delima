@@ -7,18 +7,6 @@
   <link rel="stylesheet" href="assets/css/admin.css">
 </head>
 <body>
-  <!-- === Header Navbar === -->
-  <header class="navbar">
-    <div class="nav-left">
-      <h1>⚙️ Admin Putera Delima</h1>
-    </div>
-    <nav class="nav-links">
-      <a href="admin.html" class="active">Dashboard</a>
-      <a href="keuangan.html">Keuangan</a>
-      <a href="verifikasi_anggota.html">Verifikasi</a>
-      <button id="logout-btn">Logout</button>
-    </nav>
-  </header>
 
   <!-- === Dashboard Section === -->
   <section class="dashboard">
@@ -90,6 +78,22 @@
   <footer class="footer">
     <p>© 2025 Putera Delima | Sistem Manajemen Iuran & Keuangan</p>
   </footer>
+  <!-- Placeholder Navbar -->
+  <div id="navbar-placeholder"></div>
+
+  <main class="container">
+    <h2>Selamat datang di Dashboard Admin</h2>
+    <p>Kontrol penuh manajemen anggota dan keuangan.</p>
+  </main>
+
+  <script>
+    // Muat navbar.html secara dinamis
+    document.addEventListener("DOMContentLoaded", async () => {
+      const placeholder = document.getElementById("navbar-placeholder");
+      const res = await fetch("navbar.html");
+      placeholder.innerHTML = await res.text();
+    });
+  </script>
 
   <!-- === Supabase SDK HARUS PALING ATAS === -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -102,5 +106,6 @@
 <script src="assets/js/admin.js"></script>
 </body>
 </html>
+
 
 
