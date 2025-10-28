@@ -1,4 +1,4 @@
-/* Reset dasar */
+/* === RESET DASAR === */
 * {
   margin: 0;
   padding: 0;
@@ -6,16 +6,19 @@
   font-family: "Poppins", sans-serif;
 }
 
+/* === BODY === */
 body {
-  background: linear-gradient(135deg, #00aaff, #007bff);
+  background: linear-gradient(135deg, #0056b3, #00aaff);
   color: #fff;
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-/* Navbar */
+/* === NAVBAR === */
 .navbar {
   background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(15px);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -24,10 +27,11 @@ body {
   position: sticky;
   top: 0;
   z-index: 100;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .navbar h1 {
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   font-weight: 600;
 }
 
@@ -36,7 +40,7 @@ body {
   color: #fff;
   text-decoration: none;
   margin-left: 15px;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.25);
   border: none;
   border-radius: 10px;
   padding: 8px 15px;
@@ -47,29 +51,31 @@ body {
 
 .navbar nav a:hover,
 .navbar button:hover {
-  background: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.45);
 }
 
-/* Container */
+/* === CONTAINER === */
 .container {
   display: flex;
   justify-content: center;
-  padding: 40px 20px;
+  padding: 50px 20px;
+  flex: 1;
 }
 
-/* Card */
+/* === CARD === */
 .table-card {
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(18px);
   padding: 25px 30px;
   border-radius: 20px;
   width: 100%;
-  max-width: 1100px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  max-width: 1150px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+  overflow-x: auto;
 }
 
 .table-card h2 {
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   margin-bottom: 5px;
   color: #fff;
   text-align: center;
@@ -77,69 +83,106 @@ body {
 
 .table-card .sub {
   text-align: center;
-  margin-bottom: 20px;
-  color: #d6d6d6;
+  margin-bottom: 25px;
+  color: #dceeff;
   font-size: 0.95rem;
 }
 
-/* Table */
+/* === TABLE === */
 table {
   width: 100%;
   border-collapse: collapse;
   color: #fff;
   font-size: 0.9rem;
   text-align: center;
+  min-width: 800px;
 }
 
 thead {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.25);
 }
 
 thead th {
-  padding: 10px 8px;
-  border-radius: 8px 8px 0 0;
+  padding: 12px 8px;
+  border-radius: 6px 6px 0 0;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 tbody td {
   padding: 12px 8px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 tbody tr:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.12);
 }
 
-/* Tombol aksi */
+/* === TOMBOL AKSI === */
 button.approve,
 button.reject {
   border: none;
   border-radius: 8px;
-  padding: 6px 12px;
+  padding: 7px 12px;
   color: #fff;
   cursor: pointer;
   font-size: 0.85rem;
-  transition: 0.3s ease;
+  transition: all 0.25s ease;
+  font-weight: 600;
 }
 
 button.approve {
-  background: linear-gradient(135deg, #00c851, #007e33);
+  background: linear-gradient(135deg, #00b56a, #008e4a);
 }
 
 button.reject {
-  background: linear-gradient(135deg, #ff4444, #cc0000);
+  background: linear-gradient(135deg, #ff4747, #c0392b);
 }
 
 button.approve:hover {
-  background: linear-gradient(135deg, #00e060, #00994f);
+  filter: brightness(1.15);
+  transform: translateY(-1px);
 }
 
 button.reject:hover {
-  background: linear-gradient(135deg, #ff6666, #cc3333);
+  filter: brightness(1.15);
+  transform: translateY(-1px);
 }
 
+/* === STATUS MEMUAT === */
 .loading {
   text-align: center;
-  color: #fff;
+  color: #f5faff;
   padding: 20px;
   font-style: italic;
+  opacity: 0.85;
+}
+
+/* === FOOTER === */
+.footer {
+  text-align: center;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  font-size: 0.9rem;
+  color: #f1f1f1;
+  margin-top: auto;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+  .table-card {
+    padding: 20px;
+    border-radius: 16px;
+  }
+
+  table {
+    font-size: 0.8rem;
+    min-width: 650px;
+  }
+
+  .table-card h2 {
+    font-size: 1.3rem;
+  }
 }
