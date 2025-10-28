@@ -39,11 +39,21 @@
   color: var(--pd-white);
   text-decoration: none;
   font-weight: 700;
-  font-size: 1.2rem;
+  font-size: 1.15rem;
   padding: 6px 10px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.08);
-  transition: all 0.2s ease;
+  background: rgba(255, 255, 255, 0.06);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ✅ Tambahan baru agar ukuran logo proporsional */
+.pd-logo img {
+  height: 36px;   /* kamu bisa sesuaikan: 30–40px */
+  width: auto;
+  vertical-align: middle;
+  border-radius: 6px; /* opsional jika mau ujung logo sedikit membulat */
 }
 
 .pd-logo:hover {
@@ -215,7 +225,7 @@
   }
 
   .pd-profile-name {
-    display: none; /* Sembunyikan nama di layar kecil */
+    display: none;
   }
 }
 
