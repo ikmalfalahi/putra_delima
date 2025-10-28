@@ -8,7 +8,7 @@
 
 /* === BODY === */
 body {
-  background: linear-gradient(135deg, #0056b3, #00aaff);
+  background: #fff;
   color: #fff;
   min-height: 100vh;
   display: flex;
