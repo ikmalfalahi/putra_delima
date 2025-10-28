@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", async () => {
-  // === Element References ===
+  // === ELEMENT REFERENSI ===
   const tbody = document.getElementById("admin-table-body");
   const addBtn = document.getElementById("add-data");
   const popup = document.getElementById("popup-form");
@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   let editId = null;
 
-  // === Pastikan user admin ===
+  // === CEK AUTENTIKASI DAN ROLE ADMIN ===
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return (window.location.href = "login.html");
 
@@ -21,28 +21,24 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   if (!profile || profile.role !== "admin") {
     alert("⚠️ Akses ditolak! Halaman ini hanya untuk admin.");
-    window.location.href = "anggota.html";
-    return;
+    return (window.location.href = "anggota.html");
   }
 
-  // === Fungsi Ambil Data Iuran ===
+  // === FUNGSI LOAD DATA ===
   async function loadData() {
+    tbody.innerHTML = `<tr><td colspan="6">⏳ Memuat data...</td></tr>`;
     const { data, error } = await supabase
       .from("iuran")
       .select("*")
       .order("id", { ascending: true });
 
-    if (error) {
+    if (error || !data) {
       tbody.innerHTML = `<tr><td colspan="6">❌ Gagal memuat data.</td></tr>`;
       return;
     }
 
     tbody.innerHTML = "";
-    const mobileContainer = document.getElementById("admin-table-body");
-    mobileContainer.innerHTML = "";
-
     data.forEach((row, i) => {
-      // === Versi tabel (desktop) ===
       const tr = document.createElement("tr");
       tr.innerHTML = `
         <td>${i + 1}</td>
@@ -56,30 +52,13 @@ document.addEventListener("DOMContentLoaded", async () => {
         </td>
       `;
       tbody.appendChild(tr);
-
-      // === Versi card (mobile) ===
-      const card = document.createElement("div");
-      card.className = "data-card";
-      card.innerHTML = `
-        <h3>${row.nama}</h3>
-        <p><strong>Bulan:</strong> ${row.bulan}</p>
-        <p><strong>Status:</strong> ${row.status}</p>
-        <p><strong>Bukti:</strong> ${
-          row.bukti ? `<a href="${row.bukti}" target="_blank">📎 Lihat</a>` : "-"
-        }</p>
-        <div class="actions">
-          <button class="edit-btn" data-id="${row.id}">Edit</button>
-          <button class="del-btn" data-id="${row.id}">Hapus</button>
-        </div>
-      `;
-      mobileContainer.appendChild(card);
     });
 
-    loadDashboard(data);
+    updateDashboard(data);
   }
 
-  // === Fungsi Dashboard ===
-  function loadDashboard(data) {
+  // === DASHBOARD SUMMARY ===
+  function updateDashboard(data) {
     const totalAnggota = new Set(data.map(d => d.nama)).size;
     const totalLunas = data.filter(d => d.status === "Lunas").length;
     const totalBelum = data.filter(d => d.status === "Belum Lunas").length;
@@ -91,16 +70,21 @@ document.addEventListener("DOMContentLoaded", async () => {
     document.getElementById("total-dana").textContent = `Rp ${totalIuran.toLocaleString("id-ID")}`;
   }
 
-  loadData();
+  await loadData();
 
-  // === Tambah/Edit Data ===
+  // === TAMBAH DATA ===
   addBtn.addEventListener("click", () => {
     editId = null;
     popup.classList.remove("hidden");
+    document.getElementById("nama").value = "";
+    document.getElementById("bulan").value = "";
+    document.getElementById("status").value = "Belum Lunas";
+    document.getElementById("bukti").value = "";
   });
 
   cancelBtn.addEventListener("click", () => popup.classList.add("hidden"));
 
+  // === SIMPAN DATA (TAMBAH / EDIT) ===
   saveBtn.addEventListener("click", async () => {
     const nama = document.getElementById("nama").value.trim();
     const bulan = document.getElementById("bulan").value;
@@ -114,8 +98,15 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     let buktiUrl = null;
     if (buktiFile) {
+      if (!buktiFile.type.startsWith("image/")) {
+        return alert("❌ Hanya file gambar yang diizinkan.");
+      }
+      if (buktiFile.size > 2 * 1024 * 1024) {
+        return alert("❌ Ukuran file maksimal 2MB.");
+      }
+
       const filePath = `${Date.now()}_${buktiFile.name}`;
-      const { data: uploadData, error: uploadError } = await supabase.storage
+      const { error: uploadError } = await supabase.storage
         .from("bukti_iuran")
         .upload(filePath, buktiFile);
 
@@ -139,26 +130,36 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     popup.classList.add("hidden");
-    loadData();
+    await loadData();
   });
 
-  // === Edit / Hapus ===
+  // === EDIT / HAPUS ===
   tbody.addEventListener("click", async (e) => {
     const id = e.target.dataset.id;
 
     if (e.target.classList.contains("edit-btn")) {
       editId = id;
+      const { data: row } = await supabase
+        .from("iuran")
+        .select("*")
+        .eq("id", id)
+        .single();
+
+      if (!row) return alert("Data tidak ditemukan.");
       popup.classList.remove("hidden");
+      document.getElementById("nama").value = row.nama;
+      document.getElementById("bulan").value = row.bulan;
+      document.getElementById("status").value = row.status;
     }
 
     if (e.target.classList.contains("del-btn")) {
       if (confirm("🗑️ Hapus data ini?")) {
         await supabase.from("iuran").delete().eq("id", id);
-        loadData();
+        await loadData();
       }
     }
   });
 
-  // === Refresh ===
-  refreshBtn.addEventListener("click", loadData);
+  // === REFRESH ===
+  if (refreshBtn) refreshBtn.addEventListener("click", loadData);
 });
