@@ -7,14 +7,7 @@
   <link rel="stylesheet" href="anggota.css">
 </head>
 <body>
-  <div class="navbar">
-    <h2>👤 Profil Anggota</h2>
-    <a href="admin.html">Iuran</a>
-    <a href="keuangan.html">Keuangan</a>
-    <a href="profil_anggota.html">Profil</a>
-    <button id="logout-btn" class="logout-btn">Logout</button>
-  </div>
-
+  
   <div class="profile-container">
     <h3 id="nama-anggota"></h3>
 
@@ -35,6 +28,21 @@
   <footer class="footer">
     <p>© 2025 Putera Delima | Sistem Manajemen Iuran & Keuangan</p>
   </footer>
+  <div id="navbar-placeholder"></div>
+
+  <main class="container">
+    <h2>Selamat datang di Dashboard Admin</h2>
+    <p>Kontrol penuh manajemen anggota dan keuangan.</p>
+  </main>
+
+  <script>
+    // Muat navbar.html secara dinamis
+    document.addEventListener("DOMContentLoaded", async () => {
+      const placeholder = document.getElementById("navbar-placeholder");
+      const res = await fetch("navbar.html");
+      placeholder.innerHTML = await res.text();
+    });
+  </script>
 
   <!-- === Supabase SDK === -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -48,5 +56,6 @@
 
 </body>
 </html>
+
 
 
