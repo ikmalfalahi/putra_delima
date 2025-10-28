@@ -24,14 +24,6 @@
   </style>
 </head>
 <body>
-  <header class="navbar">
-    <h1>👥 Verifikasi Anggota Baru</h1>
-    <nav>
-      <a href="admin.html">📊 Dashboard</a>
-      <a href="keuangan.html">💰 Keuangan</a>
-      <button id="logout-btn">Logout</button>
-    </nav>
-  </header>
 
   <main class="container">
     <div class="table-card">
@@ -62,6 +54,21 @@
   <footer class="footer">
     <p>© 2025 Putera Delima | Sistem Manajemen Iuran & Keuangan</p>
   </footer>
+  <div id="navbar-placeholder"></div>
+
+  <main class="container">
+    <h2>Selamat datang di Dashboard Admin</h2>
+    <p>Kontrol penuh manajemen anggota dan keuangan.</p>
+  </main>
+
+  <script>
+    // Muat navbar.html secara dinamis
+    document.addEventListener("DOMContentLoaded", async () => {
+      const placeholder = document.getElementById("navbar-placeholder");
+      const res = await fetch("navbar.html");
+      placeholder.innerHTML = await res.text();
+    });
+  </script>
 
   <!-- === Popup Konfirmasi Approve/Reject === -->
   <div id="confirm-popup" class="hidden">
