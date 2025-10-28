@@ -1,4 +1,4 @@
-/* === BASE === */
+/* === RESET & DASAR === */
 * {
   margin: 0;
   padding: 0;
@@ -7,111 +7,39 @@
 }
 
 body {
-  background: linear-gradient(135deg, #00aaff, #007bff);
+  background: linear-gradient(90deg, #0056b3, #00aaff);
   color: #fff;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-/* === NAVBAR === */
-.navbar {
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(15px);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 25px;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-}
-
-.navbar h1 {
-  font-size: 1.2rem;
-}
-
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.nav-links a,
-.nav-links button {
-  text-decoration: none;
-  color: #fff;
-  background: rgba(255, 255, 255, 0.25);
-  border: none;
-  border-radius: 10px;
-  padding: 8px 12px;
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.nav-links a:hover,
-.nav-links button:hover {
-  background: rgba(255, 255, 255, 0.45);
-}
-
-.nav-links .active {
-  background: rgba(255, 255, 255, 0.5);
-  font-weight: 600;
-}
-
-/* === HAMBURGER MENU === */
-.hamburger {
-  display: none;
-  font-size: 1.5rem;
-  cursor: pointer;
-  user-select: none;
-}
-
-/* === RESPONSIVE NAVBAR === */
-@media (max-width: 768px) {
-  .nav-links {
-    display: none;
-    flex-direction: column;
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(10px);
-    position: absolute;
-    top: 70px;
-    right: 20px;
-    width: 200px;
-    padding: 15px;
-    border-radius: 10px;
-  }
-
-  .nav-links.show {
-    display: flex;
-  }
-
-  .hamburger {
-    display: block;
-  }
-}
-
 /* === SUMMARY CARDS === */
 .summary {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 20px;
-  padding: 30px;
+  padding: 40px 30px;
 }
 
 .card {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(10px);
-  padding: 20px;
   border-radius: 15px;
+  padding: 20px;
   text-align: center;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+  transition: transform 0.25s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
 }
 
 .card h3 {
   font-size: 1rem;
   margin-bottom: 8px;
+  color: #fff;
 }
 
 .card p {
@@ -122,11 +50,11 @@ body {
 /* === TABLE SECTION === */
 .table-card {
   background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(15px);
+  backdrop-filter: blur(12px);
   border-radius: 20px;
   padding: 25px 30px;
-  margin: 0 30px 30px;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+  margin: 0 30px 40px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.25);
 }
 
 .action-bar {
@@ -136,21 +64,28 @@ body {
   margin-bottom: 15px;
 }
 
+.action-bar h2 {
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
 .action-bar button {
   background: linear-gradient(135deg, #0099ff, #0066ff);
   border: none;
   color: #fff;
   border-radius: 10px;
-  padding: 10px 15px;
+  padding: 10px 16px;
+  font-weight: 600;
   cursor: pointer;
-  transition: 0.3s;
+  transition: all 0.3s;
 }
 
 .action-bar button:hover {
   background: linear-gradient(135deg, #00bfff, #007bff);
+  transform: translateY(-2px);
 }
 
-/* TABLE */
+/* === TABLE === */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -160,6 +95,7 @@ table {
 
 thead {
   background: rgba(255, 255, 255, 0.25);
+  font-weight: 600;
 }
 
 th, td {
@@ -172,6 +108,11 @@ tr:hover {
   background: rgba(255, 255, 255, 0.1);
 }
 
+.loading {
+  text-align: center;
+  padding: 15px;
+}
+
 /* === POPUP === */
 .popup {
   position: fixed;
@@ -181,20 +122,28 @@ tr:hover {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 99;
+  z-index: 2000;
 }
 
-.hidden { display: none; }
+.hidden {
+  display: none;
+}
 
 .popup-content {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(15px);
   border-radius: 15px;
-  padding: 30px;
+  padding: 25px 30px;
   width: 90%;
   max-width: 400px;
   text-align: center;
   color: #fff;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+}
+
+.popup-content h2 {
+  margin-bottom: 15px;
+  font-size: 1.2rem;
 }
 
 .popup-content input,
@@ -209,6 +158,10 @@ tr:hover {
   font-size: 0.95rem;
 }
 
+.popup-content input::placeholder {
+  color: rgba(255, 255, 255, 0.8);
+}
+
 .popup-btns {
   display: flex;
   justify-content: space-between;
@@ -221,8 +174,9 @@ tr:hover {
   border-radius: 8px;
   padding: 10px;
   color: #fff;
+  font-weight: 600;
   cursor: pointer;
-  transition: 0.3s;
+  transition: all 0.3s;
 }
 
 #simpan-keuangan {
@@ -231,6 +185,11 @@ tr:hover {
 
 #batal-keuangan {
   background: linear-gradient(135deg, #ff6b6b, #c0392b);
+}
+
+#simpan-keuangan:hover,
+#batal-keuangan:hover {
+  transform: translateY(-2px);
 }
 
 /* === FOOTER === */
@@ -242,4 +201,5 @@ tr:hover {
   font-size: 0.9rem;
   color: #f1f1f1;
   margin-top: auto;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
 }
