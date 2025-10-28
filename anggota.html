@@ -3,24 +3,44 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Iuran Anggota - Putera Delima</title>
+  <title>Iuran Anggota | Putra Delima</title>
+
+  <!-- === Stylesheets === -->
+  <link rel="stylesheet" href="assets/css/navbar.css">
   <link rel="stylesheet" href="assets/css/style.css">
+
+  <!-- === Supabase SDK === -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="assets/js/supabase.js"></script>
 </head>
 <body>
-  <section class="table-container">
-    <table>
-      <thead>
-        <tr>
-          <th>No</th>
-          <th>Nama</th>
-          <th>Bulan</th>
-          <th>Status Iuran</th>
-        </tr>
-      </thead>
-      <tbody id="iuran-table"></tbody>
-    </table>
-  </section>
 
+  <!-- === Navbar Global Placeholder === -->
+  <div id="navbar-placeholder"></div>
+
+  <!-- === Main Section === -->
+  <main class="container">
+    <h2>Daftar Iuran Anggota</h2>
+    <p>Lihat status pembayaran iuran Anda di bawah ini.</p>
+
+    <section class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>Nama</th>
+            <th>Bulan</th>
+            <th>Status Iuran</th>
+          </tr>
+        </thead>
+        <tbody id="iuran-table">
+          <tr><td colspan="4">Memuat data...</td></tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <!-- === Popup Bukti Iuran === -->
   <div id="bukti-popup" class="popup hidden">
     <div class="popup-content">
       <img id="bukti-img" src="" alt="Bukti Iuran">
@@ -28,41 +48,27 @@
     </div>
   </div>
 
-   <!-- === Footer === -->
+  <!-- === Footer === -->
   <footer class="footer">
-    <p>© 2025 Putera Delima | Sistem Manajemen Iuran & Keuangan</p>
+    <p>© 2025 Putra Delima | Sistem Manajemen Iuran & Keuangan</p>
   </footer>
-  <div id="navbar-placeholder"></div>
 
-  <main class="container">
-    <h2>Selamat datang di Dashboard Admin</h2>
-    <p>Kontrol penuh manajemen anggota dan keuangan.</p>
-  </main>
-
+  <!-- === Script: Navbar Loader === -->
   <script>
-    // Muat navbar.html secara dinamis
     document.addEventListener("DOMContentLoaded", async () => {
-      const placeholder = document.getElementById("navbar-placeholder");
-      const res = await fetch("navbar.html");
-      placeholder.innerHTML = await res.text();
+      try {
+        const placeholder = document.getElementById("navbar-placeholder");
+        const res = await fetch("navbar.html");
+        placeholder.innerHTML = await res.text();
+      } catch (err) {
+        console.error("❌ Gagal memuat navbar:", err);
+      }
     });
   </script>
 
-  <!-- === Supabase SDK (harus paling atas dari semua JS kamu) === -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-  <!-- === Supabase client setup === -->
-  <script src="assets/js/supabase.js"></script>
-
-  <!-- === Navbar (butuh supabase) === -->
+  <!-- === JS Files === -->
   <script src="assets/js/navbar.js"></script>
+  <script src="assets/js/anggota.js"></script>
 
-  <!-- === File utama halaman === -->
-  <script src="assets/js/admin.js"></script>
 </body>
 </html>
-
-
-
-
-
