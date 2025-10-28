@@ -7,8 +7,8 @@
 }
 
 body {
-  background: #fff;
-  color: #fff;
+  background: #ffffff; /* Putih bersih */
+  color: #111; /* Teks gelap */
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -23,28 +23,31 @@ body {
 }
 
 .dash-card {
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
+  background: #ffffff;
+  border: 1px solid #ddd;
   border-radius: 16px;
   padding: 20px;
   text-align: center;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
-  transition: transform 0.25s ease;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .dash-card:hover {
   transform: translateY(-4px);
+  box-shadow: 0 5px 14px rgba(0, 0, 0, 0.15);
 }
 
 .dash-card h3 {
   font-size: 1rem;
   font-weight: 600;
   margin-bottom: 10px;
+  color: #007bff;
 }
 
 .dash-card p {
   font-size: 1.8rem;
   font-weight: 700;
+  color: #111;
 }
 
 /* === TABEL DATA === */
@@ -61,7 +64,7 @@ body {
 }
 
 .admin-actions button {
-  background: linear-gradient(135deg, #0099ff, #0066ff);
+  background: linear-gradient(135deg, #0056b3, #00aaff);
   border: none;
   color: #fff;
   border-radius: 10px;
@@ -72,7 +75,7 @@ body {
 }
 
 .admin-actions button:hover {
-  background: linear-gradient(135deg, #00bfff, #007bff);
+  opacity: 0.9;
   transform: translateY(-2px);
 }
 
@@ -81,23 +84,26 @@ body {
   border-collapse: collapse;
   border-radius: 12px;
   overflow: hidden;
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
+  background: #ffffff;
+  border: 1px solid #ddd;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
 }
 
-.admin-table th, .admin-table td {
+.admin-table th,
+.admin-table td {
   padding: 12px;
   text-align: center;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-  color: #fff;
+  border-bottom: 1px solid #eee;
+  color: #111;
 }
 
 .admin-table thead {
-  background: rgba(255, 255, 255, 0.25);
+  background: linear-gradient(135deg, #0056b3, #00aaff);
+  color: #fff;
 }
 
 .admin-table tr:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: #f9f9f9;
 }
 
 /* === POPUP FORM === */
@@ -117,20 +123,20 @@ body {
 }
 
 .popup-content {
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(15px);
+  background: #ffffff;
   border-radius: 16px;
   padding: 25px 30px;
   width: 90%;
   max-width: 400px;
   text-align: center;
-  color: #fff;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+  color: #111;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
 }
 
 .popup-content h2 {
   margin-bottom: 15px;
   font-size: 1.2rem;
+  color: #0056b3;
 }
 
 .popup-content input,
@@ -138,15 +144,15 @@ body {
   width: 100%;
   margin-bottom: 12px;
   padding: 10px;
-  border: none;
+  border: 1px solid #ccc;
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.3);
-  color: #fff;
+  background: #f9f9f9;
+  color: #111;
   font-size: 0.95rem;
 }
 
 .popup-content input::placeholder {
-  color: rgba(255, 255, 255, 0.8);
+  color: #777;
 }
 
 .popup-btns {
@@ -167,30 +173,26 @@ body {
 }
 
 #save-data {
-  background: linear-gradient(135deg, #00b894, #019879);
+  background: linear-gradient(135deg, #00c851, #00994c);
 }
 
 #cancel {
-  background: linear-gradient(135deg, #ff6b6b, #c0392b);
+  background: linear-gradient(135deg, #ff4444, #cc0000);
 }
 
-#save-data:hover {
-  transform: translateY(-2px);
-}
-
+#save-data:hover,
 #cancel:hover {
   transform: translateY(-2px);
+  opacity: 0.9;
 }
 
 /* === FOOTER === */
 .footer {
   text-align: center;
   padding: 15px;
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
+  background: linear-gradient(90deg, #0056b3, #00aaff);
   font-size: 0.9rem;
-  color: #f1f1f1;
+  color: #fff;
   margin-top: auto;
-  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
 }
-
