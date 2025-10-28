@@ -1,7 +1,7 @@
 /* === BASE === */
 body {
   font-family: "Poppins", sans-serif;
-  background: linear-gradient(90deg, #0056b3, #00aaff);
+  background: #fff;;
   margin: 0;
   color: #fff;
   min-height: 100vh;
@@ -113,3 +113,4 @@ body {
     padding: 10px 6px;
   }
 }
+
