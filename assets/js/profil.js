@@ -1,11 +1,29 @@
 document.addEventListener("DOMContentLoaded", async () => {
-  if (!window.supabase) return console.error("❌ Supabase client belum dimuat.");
+  // Pastikan Supabase tersedia
+  if (!window.supabase) {
+    console.error("❌ Supabase client belum dimuat.");
+    return;
+  }
 
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) return (window.location.href = "login.html");
+  // === Cek User Login ===
+  const { data: { user }, error: authError } = await supabase.auth.getUser();
+  if (authError) {
+    console.error("❌ Gagal ambil user:", authError);
+    return;
+  }
+  if (!user) {
+    window.location.href = "login.html";
+    return;
+  }
 
+  // === Ambil Elemen DOM ===
   const profileCard = document.querySelector(".profile-card");
   const editCard = document.querySelector(".edit-card");
+
+  if (!profileCard || !editCard) {
+    console.error("❌ Elemen profil atau edit-card tidak ditemukan di HTML.");
+    return;
+  }
 
   const fields = {
     nama: document.getElementById("nama"),
@@ -30,85 +48,110 @@ document.addEventListener("DOMContentLoaded", async () => {
     rw: document.getElementById("input-rw"),
   };
 
-  // Ambil data profile
-  const { data, error } = await supabase
+  // === Ambil Data Profil ===
+  const { data: profile, error } = await supabase
     .from("profiles")
     .select("*")
     .eq("id", user.id)
     .single();
 
-  if (error) return console.error("❌ Gagal ambil profil:", error);
+  if (error) {
+    console.error("❌ Gagal ambil profil:", error);
+    alert("Gagal memuat profil. Silakan coba lagi.");
+    return;
+  }
 
-  // Tampilkan data
-  fields.nama.textContent = data.nama || "-";
-  fields.email.textContent = user.email;
-  fields.jenis_kelamin.textContent = data.jenis_kelamin || "-";
-  fields.umur.textContent = data.umur || "-";
-  fields.agama.textContent = data.agama || "-";
-  fields.status_hubungan.textContent = data.status_hubungan || "-";
-  fields.alamat.textContent = `Blok ${data.blok || "-"}, RT ${data.rt || "-"}, RW ${data.rw || "-"}`;
-  fields.role.textContent = data.role || "-";
-  fields.status.textContent = data.status || "-";
+  // === Tampilkan Data ke Profil ===
+  const setText = (el, val) => { if (el) el.textContent = val || "-"; };
 
-  // Logout
-  document.getElementById("logout-btn").addEventListener("click", async () => {
-    await supabase.auth.signOut();
-    window.location.href = "login.html";
-  });
+  setText(fields.nama, profile.nama);
+  setText(fields.email, user.email);
+  setText(fields.jenis_kelamin, profile.jenis_kelamin);
+  setText(fields.umur, profile.umur);
+  setText(fields.agama, profile.agama);
+  setText(fields.status_hubungan, profile.status_hubungan);
+  setText(fields.alamat, `Blok ${profile.blok || "-"}, RT ${profile.rt || "-"}, RW ${profile.rw || "-"}`);
+  setText(fields.role, profile.role);
+  setText(fields.status, profile.status);
 
-  // Tombol edit
-  document.getElementById("edit-profile").addEventListener("click", () => {
-    profileCard.style.display = "none";
-    editCard.style.display = "block";
+  // === Logout Button ===
+  const logoutBtn = document.getElementById("logout-btn");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", async () => {
+      await supabase.auth.signOut();
+      window.location.href = "login.html";
+    });
+  }
 
-    // Isi form edit dengan data saat ini
-    inputFields.nama.value = data.nama || "";
-    inputFields.jenis_kelamin.value = data.jenis_kelamin || "";
-    inputFields.umur.value = data.umur || "";
-    inputFields.agama.value = data.agama || "";
-    inputFields.status_hubungan.value = data.status_hubungan || "";
-    inputFields.blok.value = data.blok || "";
-    inputFields.rt.value = data.rt || "";
-    inputFields.rw.value = data.rw || "";
-  });
+  // === Tombol Edit Profil ===
+  const editBtn = document.getElementById("edit-profile");
+  if (editBtn) {
+    editBtn.addEventListener("click", () => {
+      profileCard.style.display = "none";
+      editCard.style.display = "block";
 
-  // Tombol batal
-  document.getElementById("cancel-edit").addEventListener("click", () => {
-    editCard.style.display = "none";
-    profileCard.style.display = "block";
-  });
+      // Isi form dengan data saat ini
+      inputFields.nama.value = profile.nama || "";
+      inputFields.jenis_kelamin.value = profile.jenis_kelamin || "";
+      inputFields.umur.value = profile.umur || "";
+      inputFields.agama.value = profile.agama || "";
+      inputFields.status_hubungan.value = profile.status_hubungan || "";
+      inputFields.blok.value = profile.blok || "";
+      inputFields.rt.value = profile.rt || "";
+      inputFields.rw.value = profile.rw || "";
+    });
+  }
 
-  // Submit form edit
-  document.getElementById("form-edit-profile").addEventListener("submit", async (e) => {
-    e.preventDefault();
+  // === Tombol Batal Edit ===
+  const cancelBtn = document.getElementById("cancel-edit");
+  if (cancelBtn) {
+    cancelBtn.addEventListener("click", () => {
+      editCard.style.display = "none";
+      profileCard.style.display = "block";
+    });
+  }
 
-    const { error: updateError } = await supabase
-      .from("profiles")
-      .update({
-        nama: inputFields.nama.value,
-        jenis_kelamin: inputFields.jenis_kelamin.value,
-        umur: inputFields.umur.value,
-        agama: inputFields.agama.value,
-        status_hubungan: inputFields.status_hubungan.value,
-        blok: inputFields.blok.value,
-        rt: inputFields.rt.value,
-        rw: inputFields.rw.value
-      })
-      .eq("id", user.id);
+  // === Submit Edit Profil ===
+  const formEdit = document.getElementById("form-edit-profile");
+  if (formEdit) {
+    formEdit.addEventListener("submit", async (e) => {
+      e.preventDefault();
 
-    if (updateError) return alert("❌ Gagal update profil: " + updateError.message);
+      const updates = {
+        nama: inputFields.nama.value.trim(),
+        jenis_kelamin: inputFields.jenis_kelamin.value.trim(),
+        umur: Number(inputFields.umur.value) || null,
+        agama: inputFields.agama.value.trim(),
+        status_hubungan: inputFields.status_hubungan.value.trim(),
+        blok: inputFields.blok.value.trim(),
+        rt: inputFields.rt.value.trim(),
+        rw: inputFields.rw.value.trim(),
+      };
 
-    alert("✅ Profil berhasil diperbarui!");
+      const { error: updateError } = await supabase
+        .from("profiles")
+        .update(updates)
+        .eq("id", user.id);
 
-    // Refresh tampilan profil
-    fields.nama.textContent = inputFields.nama.value || "-";
-    fields.jenis_kelamin.textContent = inputFields.jenis_kelamin.value || "-";
-    fields.umur.textContent = inputFields.umur.value || "-";
-    fields.agama.textContent = inputFields.agama.value || "-";
-    fields.status_hubungan.textContent = inputFields.status_hubungan.value || "-";
-    fields.alamat.textContent = `Blok ${inputFields.blok.value || "-"}, RT ${inputFields.rt.value || "-"}, RW ${inputFields.rw.value || "-"}`;
+      if (updateError) {
+        console.error(updateError);
+        alert("❌ Gagal memperbarui profil: " + updateError.message);
+        return;
+      }
 
-    editCard.style.display = "none";
-    profileCard.style.display = "block";
-  });
+      alert("✅ Profil berhasil diperbarui!");
+      Object.assign(profile, updates);
+
+      // Perbarui tampilan data profil
+      setText(fields.nama, profile.nama);
+      setText(fields.jenis_kelamin, profile.jenis_kelamin);
+      setText(fields.umur, profile.umur);
+      setText(fields.agama, profile.agama);
+      setText(fields.status_hubungan, profile.status_hubungan);
+      setText(fields.alamat, `Blok ${profile.blok || "-"}, RT ${profile.rt || "-"}, RW ${profile.rw || "-"}`);
+
+      editCard.style.display = "none";
+      profileCard.style.display = "block";
+    });
+  }
 });
