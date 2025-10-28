@@ -7,7 +7,7 @@
 }
 
 body {
-  background: linear-gradient(90deg, #0056b3, #00aaff);
+  background: #fff;
   color: #fff;
   min-height: 100vh;
   display: flex;
@@ -175,3 +175,4 @@ footer {
   max-height: 300px; /* sesuai kebutuhan */
   opacity: 1;
 }
+
