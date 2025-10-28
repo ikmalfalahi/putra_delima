@@ -3,12 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin - Putera Delima</title>
+  <title>Dashboard Admin | Putra Delima</title>
+
+  <!-- === Stylesheets === -->
+  <link rel="stylesheet" href="assets/css/navbar.css">
   <link rel="stylesheet" href="assets/css/admin.css">
+
+  <!-- === Supabase SDK === -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="assets/js/supabase.js"></script>
 </head>
 <body>
 
-  <!-- === Dashboard Section === -->
+  <!-- === Navbar Global Placeholder === -->
+  <div id="navbar-placeholder"></div>
+
+  <!-- === Dashboard Header === -->
+  <main class="container">
+    <h2>Selamat Datang di Dashboard Admin</h2>
+    <p>Kelola anggota dan keuangan dengan mudah.</p>
+  </main>
+
+  <!-- === Statistik Dashboard === -->
   <section class="dashboard">
     <div class="dash-card total">
       <h3>👥 Total Anggota</h3>
@@ -28,7 +44,7 @@
     </div>
   </section>
 
-  <!-- === Table Section === -->
+  <!-- === Tabel Data Iuran === -->
   <section class="admin-container">
     <div class="admin-actions">
       <button id="add-data">➕ Tambah Data Iuran</button>
@@ -46,27 +62,41 @@
           <th>Aksi</th>
         </tr>
       </thead>
-      <tbody id="admin-table-body"></tbody>
+      <tbody id="admin-table-body">
+        <tr><td colspan="6">Memuat data...</td></tr>
+      </tbody>
     </table>
   </section>
 
-  <!-- === Popup Form === -->
+  <!-- === Popup Form Tambah/Edit Data === -->
   <div class="popup hidden" id="popup-form">
     <div class="popup-content">
       <h2 id="popup-title">Tambah Data Iuran</h2>
       <input type="text" id="nama" placeholder="Nama Anggota">
+      
       <select id="bulan">
         <option value="">Pilih Bulan</option>
-        <option>Januari</option><option>Februari</option><option>Maret</option>
-        <option>April</option><option>Mei</option><option>Juni</option>
-        <option>Juli</option><option>Agustus</option><option>September</option>
-        <option>Oktober</option><option>November</option><option>Desember</option>
+        <option>Januari</option>
+        <option>Februari</option>
+        <option>Maret</option>
+        <option>April</option>
+        <option>Mei</option>
+        <option>Juni</option>
+        <option>Juli</option>
+        <option>Agustus</option>
+        <option>September</option>
+        <option>Oktober</option>
+        <option>November</option>
+        <option>Desember</option>
       </select>
+
       <input type="file" id="bukti" accept="image/*">
+
       <select id="status">
         <option>Lunas</option>
         <option>Belum Lunas</option>
       </select>
+
       <div class="popup-btns">
         <button id="save-data">💾 Simpan</button>
         <button id="cancel">Batal</button>
@@ -74,38 +104,27 @@
     </div>
   </div>
 
-    <!-- === Footer === -->
+  <!-- === Footer === -->
   <footer class="footer">
-    <p>© 2025 Putera Delima | Sistem Manajemen Iuran & Keuangan</p>
+    <p>© 2025 Putra Delima | Sistem Manajemen Iuran & Keuangan</p>
   </footer>
-  <!-- Placeholder Navbar -->
-  <div id="navbar-placeholder"></div>
 
-  <main class="container">
-    <h2>Selamat datang di Dashboard Admin</h2>
-    <p>Kontrol penuh manajemen anggota dan keuangan.</p>
-  </main>
-
+  <!-- === Script: Navbar Loader === -->
   <script>
-    // Muat navbar.html secara dinamis
     document.addEventListener("DOMContentLoaded", async () => {
-      const placeholder = document.getElementById("navbar-placeholder");
-      const res = await fetch("navbar.html");
-      placeholder.innerHTML = await res.text();
+      try {
+        const placeholder = document.getElementById("navbar-placeholder");
+        const res = await fetch("navbar.html");
+        placeholder.innerHTML = await res.text();
+      } catch (err) {
+        console.error("❌ Gagal memuat navbar:", err);
+      }
     });
   </script>
 
-  <!-- === Supabase SDK HARUS PALING ATAS === -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- === Script Files === -->
+  <script src="assets/js/navbar.js"></script>
+  <script src="assets/js/admin.js"></script>
 
-<!-- === Client Setup kamu === -->
-<script src="assets/js/supabase.js"></script>
-
-<!-- === File lain yang butuh Supabase === -->
-<script src="assets/js/navbar.js"></script>
-<script src="assets/js/admin.js"></script>
 </body>
 </html>
-
-
-
